@@ -1,0 +1,52 @@
+<mat-card>
+    <mat-card-content>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <h2>Log In</h2>
+        <mat-error *ngIf="warning"> {{ warning }}</mat-error
+        ><br />
+        <mat-form-field class="full-width-input">
+          <input
+            matInput
+            placeholder="User Name"
+            name="username"
+            required
+            autofocus
+            [(ngModel)]="user.userName"
+          />
+          <mat-error>Please provide a valid user name</mat-error> </mat-form-field
+        ><br />
+        <mat-form-field class="full-width-input">
+          <input
+            matInput
+            type="password"
+            placeholder="Password"
+            name="password"
+            password="password"
+            required
+            [(ngModel)]="user.password"
+          />
+          <mat-error>Please provide a valid password</mat-error> </mat-form-field
+        ><br />
+        <button
+          mat-raised-button
+          color="accent"
+          type="submit"
+          [disabled]="loading"
+        >
+          <mat-icon>login</mat-icon>
+          <span>&nbsp;&nbsp;&nbsp;Login</span>
+        </button>
+        <button mat-raised-button color="accent" type="submit" *ngIf="loading">
+          <mat-icon>login</mat-icon>
+          <span>&nbsp;&nbsp;&nbsp;Processing Request</span>
+        </button>
+        &nbsp;&nbsp;
+        <a routerLink="/register">
+          <button mat-raised-button color="primary">
+            <mat-icon>account_box</mat-icon>
+            <span>&nbsp;&nbsp;&nbsp;Register</span>
+          </button>
+        </a>
+      </form>
+    </mat-card-content>
+  </mat-card>
