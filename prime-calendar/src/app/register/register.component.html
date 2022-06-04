@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-content>
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <form (ngSubmit)="onSubmit()">
         <h2>Register</h2>
         <mat-error *ngIf="success == false">{{ warning }}</mat-error
         ><br />

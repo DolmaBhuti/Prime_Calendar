@@ -4,7 +4,6 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import User from "../User";
-import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
   }
-  onSubmit(f: NgForm): void {
+  onSubmit(): void {
 
     if(this.user.userName != "" && this.user.password != "" ){
       this.loading = true;
@@ -29,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loading = false;
         localStorage.setItem('access_token', success.token);
 
-        this.router.navigate(['/newReleases']);
+        this.router.navigate(['/about']);
         console.log(this.user.userName + " has been logged in.") 
       },
       err =>{

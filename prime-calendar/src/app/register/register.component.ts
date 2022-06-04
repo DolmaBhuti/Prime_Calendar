@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
-import User from '../User';
-import { NgForm} from "@angular/forms";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -23,7 +22,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     
 
   }
-  onSubmit(f: NgForm): void {
+  onSubmit(): void {
     console.log("in onSubmit statement")
 
 
