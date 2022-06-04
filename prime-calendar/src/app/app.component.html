@@ -481,4 +481,33 @@
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
+
+
+<mat-toolbar class="navbar" color="primary">
+
+  <a class="navbar-brand" matTooltip="Home">
+    <h1>
+      Primary Calendar
+    </h1>
+  </a>
+
+  <span class="navbar-spacer"></span>
+
+  <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="token">
+    <mat-icon>person</mat-icon>
+    <span fxShow fxHide.xs>
+      {{token.userName}}
+    </span>
+  </button>
+  <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
+
+    <a mat-menu-item (click)="logout()">
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Log out</span>
+    </a>
+
+  </mat-menu>
+
+</mat-toolbar>
+
 <router-outlet></router-outlet>
