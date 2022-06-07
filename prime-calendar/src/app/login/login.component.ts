@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loading = false;
         localStorage.setItem('access_token', success.token);
 
-        this.router.navigate(['/about']);
+        this.router.navigate(['/calendar']);
         console.log(this.user.userName + " has been logged in.") 
       },
       err =>{

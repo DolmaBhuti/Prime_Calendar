@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { AboutComponent } from './about/about.component';
+import { CalendarComponent } from './calendar/calendar.component';
 import { GuardAuthService } from './guard-auth.service';
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: LoginComponent},
   { path: '', component: LandingPageComponent},
+  { path: 'calendar', component: CalendarComponent, canActivate: [GuardAuthService]},
   // { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
