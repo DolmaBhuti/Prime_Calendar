@@ -17,17 +17,24 @@ export class CalendarComponent implements OnInit {
       title: 'BCH237',
       start: '2022-06-12T10:30:00',
       end: '2022-06-12T11:30:00',
-      extendedProps: {
-        department: 'BioChemistry'
-      }
+
+      description:'LECTURE',
+      department: 'BioChemistry'
       },
       { 
         title: 'event 2', date: '2019-04-02' }
     ],
-    eventClick: function(info) {
-      console.log(info.event.extendedProps)
-      alert('event click! ' + info.event.extendedProps)  //date click! 2022-06-06
+    eventClick: function(info) { //https://fullcalendar.io/docs/event-model
+      console.log(info.event.extendedProps['department'])
+      alert('event click! ' + info.event.extendedProps['description'])
+      info.event.setStart('2022-06-13T10:30:00');
     }
+    
+    // eventContent: function(arg) {
+    //   console.log(arg.event.extendedProps);
+    //   alert('event click! ' + arg.event.extendedProps['department'])
+
+    // }
   };
   
   handleDateClick(arg:any) { //TODO: create/edit/delete event form
