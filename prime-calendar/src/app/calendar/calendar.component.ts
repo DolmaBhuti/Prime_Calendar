@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular'; // useful for typechecking
 import interactionPlugin from '@fullcalendar/interaction';
-
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
