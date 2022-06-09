@@ -1,7 +1,8 @@
 export default class Events {
-    _id:string = "";
+    //_id and userId will be configured in server
+    //_id:string = "";
     eventTitle:string =  "";
     startTime: string ="";
-    eventDate: Date = new Date();
-    userID: string = "";
+    date: Date = new Date();
+    //userId: string = "";
 }

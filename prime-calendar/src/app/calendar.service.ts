@@ -12,6 +12,7 @@ export class CalendarService {
     constructor( private http: HttpClient) { }
     //add calendar service (save to the mongo db) here
     eventAdd(event: Event): Observable<any>{
+      //console.log("service received event: "+JSON.stringify(event))
       return this.http.post<any>(`${environment.userAPIBase}/events/add`, event);
     }
 

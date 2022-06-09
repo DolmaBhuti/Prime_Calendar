@@ -10,7 +10,7 @@ import Events from '../Event';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  event:Events = {_id:"",eventTitle: "Test event", startTime:"", eventDate: new Date(), userID:"32433234"};
+  event:Events = {eventTitle: "Test event", startTime:"", date: new Date()};
   
   constructor(private calService : CalendarService) { }
   private calendarSub: Subscription | undefined;
@@ -21,7 +21,7 @@ export class CalendarComponent implements OnInit {
     selectable: true,
 
     select: this.handleDateSelect.bind(this), // bind is important!
-    //select: this.handleDateSelect.bind(this), // bind is important!
+    
     events: [
       {       
       title: 'BCH237',
@@ -35,23 +35,10 @@ export class CalendarComponent implements OnInit {
         title: 'event 2', date: '2019-04-02' }
     ],
     eventAdd: this.handleEventAdd.bind(this)
-    // eventClick: function(info) { //https://fullcalendar.io/docs/event-model
-    //   console.log(info.event.extendedProps['department'])
-    //   alert('event click! ' + info.event.extendedProps['description'])
-    //   info.event.setStart('2022-06-13T10:30:00');
-      
-    // }
-    
-    // eventContent: function(arg) {
-    //   console.log(arg.event.extendedProps);
-    //   alert('event click! ' + arg.event.extendedProps['department'])
 
-    // }
   };
   
-  handleDateClick(arg:any) { //TODO: create/edit/delete event form
-    alert('date click! ' + arg.dateStr)  //date click! 2022-06-06
-  }
+  //Click and select a date to add event to the calendar:
   handleDateSelect(selectInfo: DateSelectArg) {
 
     const title = prompt('Please enter a new title for your event');
@@ -75,17 +62,18 @@ export class CalendarComponent implements OnInit {
     }
 
     }
+
+    //Convert the added event to our custom Event object, and pass to API server:
     handleEventAdd(addInfo: EventAddArg){
       
-      
-      this.calendarSub = this.calService.eventAdd(addInfo).subscribe(success=>{
-        //if add event was successful
-        
-      },
-      err=>{
-        //if not successful
-        
-      });
+      //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
+      var eventNeedsToAdd:Events = {
+      eventTitle:addInfo.event.title,
+      startTime: addInfo.event.start?.toString()!,
+      date: new Date()}
+      //console.log(eventNeedsToAdd)
+
+      this.calendarSub = this.calService.eventAdd(eventNeedsToAdd).subscribe(success=>{})
     }
   ngOnInit(): void {
   }
