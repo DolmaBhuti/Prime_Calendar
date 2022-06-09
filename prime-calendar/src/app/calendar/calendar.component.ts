@@ -23,16 +23,7 @@ export class CalendarComponent implements OnInit {
     select: this.handleDateSelect.bind(this), // bind is important!
     
     events: [
-      {       
-      title: 'BCH237',
-      start: '2022-06-12T10:30:00',
-      end: '2022-06-12T11:30:00',
-
-      description:'LECTURE',
-      department: 'BioChemistry'
-      },
-      { 
-        title: 'event 2', date: '2019-04-02' }
+     //function that requests ALL events from database
     ],
     eventAdd: this.handleEventAdd.bind(this)
 
@@ -42,6 +33,7 @@ export class CalendarComponent implements OnInit {
   handleDateSelect(selectInfo: DateSelectArg) {
 
     const title = prompt('Please enter a new title for your event');
+
     const calendarApi = selectInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
     

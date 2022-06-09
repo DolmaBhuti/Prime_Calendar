@@ -65,11 +65,13 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     HttpClientModule,
     FullCalendarModule // register FullCalendar with you app
   ],
-  providers: [{
+  providers: [
+    {
     provide: HTTP_INTERCEPTORS,
     useClass: InterceptTokenService,
     multi: true
-  }],
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
