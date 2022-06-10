@@ -14,7 +14,7 @@ export default class Events {
     startTime: String = "";
     endTime: String = "";
     date: Date = new Date(); 
-    //dayOfWeek: [Number] = [0];
+    dayOfWeek: [Number] = [0];
     recurring: Boolean = false;
     //userId: String
     
