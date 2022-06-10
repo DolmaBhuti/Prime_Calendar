@@ -3,6 +3,8 @@ import { CalendarOptions, DateSelectArg, EventAddArg } from '@fullcalendar/angul
 import interactionPlugin from '@fullcalendar/interaction';
 import { Subscription } from 'rxjs';
 import { CalendarService } from '../calendar.service';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 import Events from '../Event';
 @Component({
   selector: 'app-calendar',

@@ -22,7 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 //full calendar plug ins
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -31,9 +33,6 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { AboutComponent } from './about/about.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
-
-//Dialog
-import {MatDialogModule} from "@angular/material/dialog";
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -46,7 +45,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RegisterComponent,
     AboutComponent,
     LandingPageComponent,
-    CalendarComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -63,11 +62,14 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatInputModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    FullCalendarModule, // register FullCalendar with you app
-    MatDialogModule
+    MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
+    FullCalendarModule // register FullCalendar with you app
   ],
   providers: [
     {
