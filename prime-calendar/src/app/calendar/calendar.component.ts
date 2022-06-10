@@ -3,20 +3,34 @@ import { CalendarOptions, DateSelectArg, EventAddArg } from '@fullcalendar/angul
 import interactionPlugin from '@fullcalendar/interaction';
 import { Subscription } from 'rxjs';
 import { CalendarService } from '../calendar.service';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
 import Events from '../Event';
+
+//events dialog
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(),recurring: false};
+  event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(), dayOfWeek: [0],recurring: false};
   
-  constructor(private calService : CalendarService) { }
+  constructor(private calService : CalendarService, private dialog: MatDialog) { }
   private calendarSub: Subscription | undefined;
 
+  //Open event dialog
+  openDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+
+
+    //this.dialog.open(CourseDialogComponent, dialogConfig);
+  }   
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -41,7 +55,6 @@ export class CalendarComponent implements OnInit {
     const calendarApi = selectDate.view.calendar;
     calendarApi.unselect(); // clear date selection
     
-    
     if (title) {
     
       calendarApi.addEvent({
@@ -63,8 +76,8 @@ export class CalendarComponent implements OnInit {
     startTime: addInfo.event.start?.toString()!,
     endTime: addInfo.event.end?.toString()!,
     description: addInfo.event.extendedProps['description'],
-    recurring: addInfo.event.extendedProps['recurring'],
-    //dayOfWeek: addInfo.event.extendedProps['dayOfWeek'],
+    recurring: addInfo.event._def.recurringDef?.typeData.startRecur,
+    dayOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
     date: new Date()}
     //console.log(eventNeedsToAdd)
 
