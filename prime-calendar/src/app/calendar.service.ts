@@ -16,4 +16,8 @@ export class CalendarService {
       return this.http.post<any>(`${environment.userAPIBase}/events/add`, event);
     }
 
+    /*eventGet(id: String): Observable<any>{
+      return this.http.get<any>(`${environment.userAPIBase}/events`);
+    }*/
+
 }

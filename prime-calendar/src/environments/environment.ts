@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  //userAPIBase:"http://localhost:8080/api/user"
-  userAPIBase: "https://primecalendar-server.herokuapp.com/api/user"
+  userAPIBase:"http://localhost:8080/api/user"
+  //userAPIBase: "https://primecalendar-server.herokuapp.com/api/user"
 }
 /*
  * For easier debugging in development mode, you can import the following file

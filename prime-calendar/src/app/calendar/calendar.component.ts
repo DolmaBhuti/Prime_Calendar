@@ -10,7 +10,7 @@ import Events from '../Event';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  event:Events = {eventTitle: "Test event", startTime:"", date: new Date()};
+  event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(),recurring: false};
   
   constructor(private calService : CalendarService) { }
   private calendarSub: Subscription | undefined;
@@ -24,50 +24,62 @@ export class CalendarComponent implements OnInit {
     
     events: [
      //function that requests ALL events from database
+     //getEvents: this.handleAllEventsGet.bind(this)
     ],
-    eventAdd: this.handleEventAdd.bind(this)
-
+    //getEvents: this.handleAllEventsGet.bind(this)
+    
+    eventAdd: this.handleEventAdd.bind(this),
   };
   
   //Click and select a date to add event to the calendar:
-  handleDateSelect(selectInfo: DateSelectArg) {
+  handleDateSelect(selectDate: DateSelectArg) {
 
     const title = prompt('Please enter a new title for your event');
-
-    const calendarApi = selectInfo.view.calendar;
+    
+    const calendarApi = selectDate.view.calendar;
     calendarApi.unselect(); // clear date selection
     
     
     if (title) {
     
       calendarApi.addEvent({
-      
         title,
-        
-        start: selectInfo.startStr,
-        
-        end: selectInfo.endStr,
-        
-        allDay: selectInfo.allDay
-    
+        start: selectDate.startStr,
+        end: selectDate.endStr,
+        //allDay: selectInfo.allDay
       });
     }
 
-    }
+  }
 
-    //Convert the added event to our custom Event object, and pass to API server:
-    handleEventAdd(addInfo: EventAddArg){
-      
-      //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
-      var eventNeedsToAdd:Events = {
-      eventTitle:addInfo.event.title,
-      startTime: addInfo.event.start?.toString()!,
-      date: new Date()}
-      //console.log(eventNeedsToAdd)
+  //Convert the added event to our custom Event object, and pass to API server:
+  handleEventAdd(addInfo: EventAddArg){
+    
+    //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
+    var eventNeedsToAdd:Events = {
+    eventTitle:addInfo.event.title,
+    startTime: addInfo.event.start?.toString()!,
+    endTime: addInfo.event.end?.toString()!,
+    description: addInfo.event.extendedProps['description'],
+    recurring: addInfo.event.extendedProps['recurring'],
+    //dayOfWeek: addInfo.event.extendedProps['dayOfWeek'],
+    date: new Date()}
+    //console.log(eventNeedsToAdd)
 
-      this.calendarSub = this.calService.eventAdd(eventNeedsToAdd).subscribe(success=>{})
-    }
+    this.calendarSub = this.calService.eventAdd(eventNeedsToAdd).subscribe(success=>{})
+  }
+
+    /*handleAllEventsGet(id: String){
+      this.calendarSub = this.calService.eventGet(id).subscribe(success=>{})
+    }*/
+
   ngOnInit(): void {
+  }
+
+  onSubmit(): void {
+    if(this.event.eventTitle != ""){
+      
+    }
   }
 
 }

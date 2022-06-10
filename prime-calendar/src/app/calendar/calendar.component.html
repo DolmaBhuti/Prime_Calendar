@@ -1,18 +1,101 @@
-
 <div>
-    <div class="sidebar">
-    </div>
+  <div class="sidebar">
+  </div>
+  <div>
+    <full-calendar [options]="calendarOptions"></full-calendar>
     <div>
-        <full-calendar [options]="calendarOptions"></full-calendar>
-        <div>
-            </div>
     </div>
-    <div class="eventForm">
-        <!-- ADD EVENT FORM -->
-        
-    </div>
+  </div>
+  <div class="eventForm">
+    <!-- ADD EVENT FORM -->
+    <!--<mat-card>
+            <mat-card-content>
+              <form (ngSubmit)="onSubmit()">
+                <h2>Create a event</h2>
+                <!--<mat-error *ngIf="success == false">{{ warning }}</mat-error
+                >-<br />
+                <mat-form-field class="full-width-input">
+                  <input
+                    matInput
+                    placeholder="Event title"
+                    name="eventTitle"
+                    [(ngModel)]="event.eventTitle"
+                    required
+                    autofocus
+                  />
+                  <mat-error>Please provide a valid event title</mat-error> </mat-form-field
+                ><br />
+                <mat-form-field class="full-width-input">
+                  <input
+                    matInput
+                    placeholder="Start Time"
+                    name="startTime"
+                    [(ngModel)]="event.startTime"
+                    required
+                  />
+                  <mat-error>Please provide a valid start time</mat-error> </mat-form-field
+                ><br />
+                <!--<mat-form-field class="full-width-input">
+                  <input
+                    matInput
+                    placeholder="End Time"
+                    name="endTime"
+                    [(ngModel)]="event.endTime"
+                    required
+                  />
+                  <mat-error>Please provide a valid end time</mat-error> </mat-form-field
+                >-
+                <br />
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                >
+                  <mat-icon>account_box</mat-icon>
+                  <span>&nbsp;&nbsp;&nbsp;Register</span>
+                </button>
+                <!--if loading
+                <button mat-raised-button color="primary" type="submit">
+                  <mat-icon>account_box</mat-icon>
+                  <span>&nbsp;&nbsp;&nbsp;Processing Request</span>
+                </button>
+              </form>
+            </mat-card-content>
+          </mat-card>-->
+    <mat-card>
+      <mat-card-content>
+        <form(ngSubmit)="onSubmit()">
+          <h2>Create New Event</h2>><br />
+          <mat-form-fieldclass="full-width-input">
+            <labelfor=“title”>Title</label>
+              <inputmatInputname=“title”id=“title”[(ngModel)]=“event.eventTitle”required>
+                </mat-form-field><br />
+                <mat-form-fieldclass="full-width-input">
+                  <labelfor="description">Description</label>
+                    <inputmatInputname="description"id="description"[(ngModel)]="event.description">
+                      </mat-form-field><br />
+                      <mat-form-fieldclass="full-width-input">
+                        <labelfor="date">Date</label>
+                          <inputmatInputname="date"id="date"placeholder="event.date"[(ngModel)]="event.date" />
+                          </mat-form-field><br />
+                          <mat-form-fieldclass="full-width-input">
+                            <labelfor="startTime">Start Time</label>
+                              <inputmatInputname="startTime"[(ngModel)]="event.startTime"id="startTime" />
+                              <span>TO</span>
+                              <inputmatInput name="endTime" [(ngModel)]="event.endTime" id="endTime" />
+                              </mat-form-field>
+                              <mat-form-fieldappearance="fill">
+                                <mat-selectrequired>
+                                  <mat-option>--None --</mat-option>
+                                  <mat-optionvalue="option">Daily</mat-option>
+                                    <mat-optionvalue="option">Weekly</mat-option>
+                                      <mat-optionvalue="option">Daily</mat-option>
+                                        </mat-select>
+                                        <mat-label>
+                                          <mat-icon>favorite</mat-icon><b>Fancy</b><i>label</i>
+                                        </mat-label>
+                                        </mat-form-field>
+                                        <mat-card-content>
+                                          <mat-card>
+  </div>
 </div>
-<div class="eventForm">
-    
-</div>
-

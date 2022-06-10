@@ -32,6 +32,9 @@ import { AboutComponent } from './about/about.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
 
+//Dialog
+import {MatDialogModule} from "@angular/material/dialog";
+
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
   interactionPlugin
@@ -43,7 +46,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RegisterComponent,
     AboutComponent,
     LandingPageComponent,
-    CalendarComponent
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    FullCalendarModule // register FullCalendar with you app
+    FullCalendarModule, // register FullCalendar with you app
+    MatDialogModule
   ],
   providers: [
     {
