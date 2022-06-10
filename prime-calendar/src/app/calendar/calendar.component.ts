@@ -7,6 +7,8 @@ import Events from '../Event';
 
 //events dialog
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-calendar',
@@ -98,4 +100,3 @@ export class CalendarComponent implements OnInit {
   }
 
 }
-
