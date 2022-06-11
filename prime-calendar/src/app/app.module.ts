@@ -33,6 +33,7 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { AboutComponent } from './about/about.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { EventCreateDialogComponent } from './event-create-dialog/event-create-dialog.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -45,7 +46,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RegisterComponent,
     AboutComponent,
     LandingPageComponent,
-    CalendarComponent
+    CalendarComponent,
+    EventCreateDialogComponent
   ],
   imports: [
     BrowserModule,

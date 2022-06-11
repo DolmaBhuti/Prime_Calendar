@@ -9,9 +9,11 @@ import { CalendarService } from '../calendar.service';
 import { EventFlexible } from '../Recurring';
 
 //events dialog
-import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material/dialog";
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+import { AboutComponent } from '../about/about.component';
+import { EventCreateDialogComponent } from '../event-create-dialog/event-create-dialog.component';
 
 
 @Component({
@@ -24,9 +26,9 @@ export class CalendarComponent implements OnInit {
   // eventS:SingleEvent = { title:"", start:"", end:"", description:"" };
   // eventR:RecurringEvent = { title:"", start: "", end: "", description :"", daysOfWeek:[0], startRecur: "", endRecur: "" };
 
-  eventTest:EventFlexible = { title:"", start:"", end:"", description:"" }; // <---------
+  eventTest:EventFlexible = { eventTitle:"", startTime:"", endTime:"", description:"" }; // <---------
   
-  constructor(private calService : CalendarService, private dialog: MatDialog) { }
+  constructor(private calService : CalendarService,public dialog:MatDialog) { }
   private calendarSub: Subscription | undefined;
 
   //Open event dialog
@@ -60,21 +62,35 @@ export class CalendarComponent implements OnInit {
   //Click and select a date to add event to the calendar:
   handleDateSelect(selectDate: DateSelectArg) {
 
-    const title = prompt('Please enter a new title for your event');
-    
+    //const title = prompt('Please enter a new title for your event');
+
+    //generate pop up dialog:
+    let dialogRef = this.dialog.open(EventCreateDialogComponent,{width:'400px',data:this.eventTest})
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed, add event: '+result);
+      if(result){
+        this.eventTest.eventTitle = result.eventTitle;
+      this.eventTest.startTime = result.startTime;
+      this.eventTest.endTime = result.endTime;
+      this.eventTest.description = result.description;
+      console.log('The dialog was closed, add event: '+this.eventTest.eventTitle);
+
+
+    const title =  this.eventTest.eventTitle.toString();
     const calendarApi = selectDate.view.calendar;
-    calendarApi.unselect(); // clear date selection
     
+    console.log('title: '+title);
     if (title) {
     
       calendarApi.addEvent({
         title,
         start: selectDate.startStr,
         end: selectDate.endStr,
-        //allDay: selectInfo.allDay
+        allDay: selectDate.allDay
       });
     }
-
+    calendarApi.unselect();
+      }}); // clear date selection
   }
 
   recurring : Boolean = false; // dont forget
@@ -85,9 +101,9 @@ export class CalendarComponent implements OnInit {
     if (this.recurring == true) {
           //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
         var addEvent:EventFlexible = {
-        title: addInfo.event.title,
-        start: addInfo.event.start?.toString()!,
-        end: addInfo.event.end?.toString()!,
+        eventTitle: addInfo.event.title,
+        startTime: addInfo.event.start?.toString()!,
+        endTime: addInfo.event.end?.toString()!,
         description: addInfo.event.extendedProps['description'],
         startRecur: addInfo.event._def.recurringDef?.typeData.startRecur?.toString()!,
         endRecur : addInfo.event._def.recurringDef?.typeData.endRecur?.toString()!,
@@ -98,9 +114,9 @@ export class CalendarComponent implements OnInit {
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
     } else {
       var addEvent:EventFlexible = {
-        title: addInfo.event.title,
-        start: addInfo.event.start?.toString()!,
-        end: addInfo.event.end?.toString()!,
+        eventTitle: addInfo.event.title,
+        startTime: addInfo.event.start?.toString()!,
+        endTime: addInfo.event.end?.toString()!,
         description: addInfo.event.extendedProps['description']
       }
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
@@ -116,7 +132,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if(this.eventTest.title != ""){
+    if(this.eventTest.eventTitle != ""){
       
     }
   }

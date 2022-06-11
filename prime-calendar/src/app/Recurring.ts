@@ -25,9 +25,9 @@
 // }
 
 export interface EventFlexible {
-    title: String;
-    start: String;
-    end: String;
+    eventTitle: String;
+    startTime: String;
+    endTime: String;
     description: String;
     daysOfWeek?: String;
     startRecur?: String;
