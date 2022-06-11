@@ -3,12 +3,16 @@ import { CalendarOptions, DateSelectArg, EventAddArg } from '@fullcalendar/angul
 import interactionPlugin from '@fullcalendar/interaction';
 import { Subscription } from 'rxjs';
 import { CalendarService } from '../calendar.service';
-import Events from '../Event';
+// import Events from '../Single';
+// import SingleEvent from '../Single';
+// import RecurringEvent from '../Recurring';
+import { EventFlexible } from '../Recurring';
 
 //events dialog
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import { MatOption } from '@angular/material/core';
 import { MatSelect } from '@angular/material/select';
+
 
 @Component({
   selector: 'app-calendar',
@@ -16,7 +20,11 @@ import { MatSelect } from '@angular/material/select';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(), dayOfWeek: [0],recurring: false};
+  // event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(), dayOfWeek: [0],recurring: false};
+  // eventS:SingleEvent = { title:"", start:"", end:"", description:"" };
+  // eventR:RecurringEvent = { title:"", start: "", end: "", description :"", daysOfWeek:[0], startRecur: "", endRecur: "" };
+
+  eventTest:EventFlexible = { title:"", start:"", end:"", description:"" }; // <---------
   
   constructor(private calService : CalendarService, private dialog: MatDialog) { }
   private calendarSub: Subscription | undefined;
@@ -69,21 +77,34 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  recurring : Boolean = false; // dont forget
+
+
   //Convert the added event to our custom Event object, and pass to API server:
   handleEventAdd(addInfo: EventAddArg){
-    
-    //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
-    var eventNeedsToAdd:Events = {
-    eventTitle:addInfo.event.title,
-    startTime: addInfo.event.start?.toString()!,
-    endTime: addInfo.event.end?.toString()!,
-    description: addInfo.event.extendedProps['description'],
-    recurring: addInfo.event._def.recurringDef?.typeData.startRecur,
-    dayOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
-    date: new Date()}
-    //console.log(eventNeedsToAdd)
-
-    this.calendarSub = this.calService.eventAdd(eventNeedsToAdd).subscribe(success=>{})
+    if (this.recurring == true) {
+          //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
+        var addEvent:EventFlexible = {
+        title: addInfo.event.title,
+        start: addInfo.event.start?.toString()!,
+        end: addInfo.event.end?.toString()!,
+        description: addInfo.event.extendedProps['description'],
+        startRecur: addInfo.event._def.recurringDef?.typeData.startRecur?.toString()!,
+        endRecur : addInfo.event._def.recurringDef?.typeData.endRecur?.toString()!,
+        daysOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
+        //date: new Date()}
+        //console.log(eventNeedsToAdd)
+      }
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+    } else {
+      var addEvent:EventFlexible = {
+        title: addInfo.event.title,
+        start: addInfo.event.start?.toString()!,
+        end: addInfo.event.end?.toString()!,
+        description: addInfo.event.extendedProps['description']
+      }
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+    }
   }
 
     /*handleAllEventsGet(id: String){
@@ -91,10 +112,11 @@ export class CalendarComponent implements OnInit {
     }*/
 
   ngOnInit(): void {
+
   }
 
   onSubmit(): void {
-    if(this.event.eventTitle != ""){
+    if(this.eventTest.title != ""){
       
     }
   }

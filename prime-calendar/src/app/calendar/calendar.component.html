@@ -19,7 +19,7 @@
                 matInput
                 name="title"
                 id="title"
-                [(ngModel)]="event.eventTitle"
+                [(ngModel)]="eventTest.title"
                 required>
             </mat-form-field><br />
             <mat-form-field class="full-width-input">
@@ -28,10 +28,10 @@
                 matInput
                 name="description"
                 id="description"
-                [(ngModel)]="event.description"
+                [(ngModel)]="eventTest.description"
                 >
             </mat-form-field><br />
-            <mat-form-field class="full-width-input">
+            <!-- <mat-form-field class="full-width-input">
                 <label for="date">Date</label>
                 <input
                 matInput
@@ -40,20 +40,20 @@
                 placeholder="event.date"
                 [(ngModel)]="event.date"
                 />
-            </mat-form-field><br />
+            </mat-form-field><br /> -->
             <mat-form-field class="full-width-input">
                 <label for="startTime">Start Time</label>
                 <input
                 matInput
                 name="startTime"
-                [(ngModel)]="event.startTime"
+                [(ngModel)]="eventTest.start"
                 id="startTime"
                 />
                 <span>TO</span>
                 <input
                 matInput
                 name="endTime"
-                [(ngModel)]="event.endTime"
+                [(ngModel)]="eventTest.end"
                 id="endTime"
                 />
             </mat-form-field>

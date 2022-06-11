@@ -8,14 +8,14 @@
 
 }*/
 
-export default class Events {
-    eventTitle: String  = "";
+export default class SingleEvent { //single occurrence event
+    title: String  = "";
+    start: String = "";
+    end: String = "";
     description: String ="";
-    startTime: String = "";
-    endTime: String = "";
-    date: Date = new Date(); 
-    dayOfWeek: [Number] = [0];
-    recurring: Boolean = false;
+    // date: Date = new Date(); 
+    // dayOfWeek: [Number] = [0];
+    // startR
     //userId: String
     
 }
