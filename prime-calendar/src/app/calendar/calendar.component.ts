@@ -26,7 +26,7 @@ export class CalendarComponent implements OnInit {
   // eventS:SingleEvent = { title:"", start:"", end:"", description:"" };
   // eventR:RecurringEvent = { title:"", start: "", end: "", description :"", daysOfWeek:[0], startRecur: "", endRecur: "" };
 
-  eventTest:EventFlexible = { eventTitle:"", startTime:"", endTime:"", description:"" }; // <---------
+  eventTest:EventFlexible = { eventTitle:"", start: new Date(), end:new Date(), description:""}; // <---------
   
   constructor(private calService : CalendarService,public dialog:MatDialog) { }
   private calendarSub: Subscription | undefined;
@@ -43,6 +43,8 @@ export class CalendarComponent implements OnInit {
 
     //this.dialog.open(CourseDialogComponent, dialogConfig);
   }   
+
+
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -70,30 +72,44 @@ export class CalendarComponent implements OnInit {
       console.log('The dialog was closed, add event: '+result);
       if(result){
         this.eventTest.eventTitle = result.eventTitle;
-      this.eventTest.startTime = result.startTime;
-      this.eventTest.endTime = result.endTime;
+      this.eventTest.start = result.startTime;
+      this.eventTest.end = result.endTime;
       this.eventTest.description = result.description;
       console.log('The dialog was closed, add event: '+this.eventTest.eventTitle);
-
+      console.log(result);
 
     const title =  this.eventTest.eventTitle.toString();
     const calendarApi = selectDate.view.calendar;
-    
-    console.log('title: '+title);
+    const start = new Date("2022-06-11T10:30:00-04:00");
+    const end = new Date('2022-06-11T12:30:00-04:00');
+    const startTime = '10:45:00';
+    const endTime = '12:45:00';
+    // const startRecur = new Date("2022-06-11T10:30:00");
+    const startRecur = null;
+    const daysOfWeek = null;
+    console.log('title: '+title); 
     if (title) {
     
       calendarApi.addEvent({
         title,
-        start: selectDate.startStr,
-        end: selectDate.endStr,
-        allDay: selectDate.allDay
+        // start: new Date(selectDate.startStr),
+        // end: new Date(selectDate.endStr),
+        start,
+        end,
+        startTime,
+        endTime,
+        description: this.eventTest.description.toString(),
+        startRecur,
+        daysOfWeek
+        //allDay: selectDate.allDay
       });
+
     }
     calendarApi.unselect();
       }}); // clear date selection
   }
 
-  recurring : Boolean = false; // dont forget
+  recurring : Boolean = true; // dont forget
 
 
   //Convert the added event to our custom Event object, and pass to API server:
@@ -102,23 +118,40 @@ export class CalendarComponent implements OnInit {
           //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
         var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
-        startTime: addInfo.event.start?.toString()!,
-        endTime: addInfo.event.end?.toString()!,
+        // start: addInfo.event.start?.toString()!,
+        // end: addInfo.event.end?.toString()!,
+        start: addInfo.event.start!,
+        end: addInfo.event.end!,
         description: addInfo.event.extendedProps['description'],
-        startRecur: addInfo.event._def.recurringDef?.typeData.startRecur?.toString()!,
-        endRecur : addInfo.event._def.recurringDef?.typeData.endRecur?.toString()!,
+        // startRecur: addInfo.event._def.recurringDef?.typeData.startRecur?.toString()!,
+        // endRecur : addInfo.event._def.recurringDef?.typeData.endRecur?.toString()!,
+        startRecur: addInfo.event._def.recurringDef?.typeData.startRecur!,
+        endRecur : addInfo.event._def.recurringDef?.typeData.endRecur!,
         daysOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
+        //allDay: addInfo.event.allDay
         //date: new Date()}
         //console.log(eventNeedsToAdd)
       }
+      console.log(addInfo);
+      console.log(addEvent);
+      console.log(addInfo.event.extendedProps['description']);
+      console.log(addInfo.event._instance?.range.start);
+      console.log(addInfo.event._instance?.range.end);
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
     } else {
       var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
-        startTime: addInfo.event.start?.toString()!,
-        endTime: addInfo.event.end?.toString()!,
-        description: addInfo.event.extendedProps['description']
+        //start: addInfo.event.start?.toString()!,
+        //end: addInfo.event.end?.toString()!,
+        start: addInfo.event.start!,
+        end: addInfo.event.end!,
+        description: addInfo.event.extendedProps['description'],
+        //allDay: addInfo.event.allDay,
       }
+      console.log(addEvent);
+      console.log(addInfo.event.extendedProps['description']);
+      console.log(addInfo.event._instance?.range.start);
+      console.log(addInfo.event._instance?.range.end);
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
     }
   }
@@ -126,6 +159,18 @@ export class CalendarComponent implements OnInit {
     /*handleAllEventsGet(id: String){
       this.calendarSub = this.calService.eventGet(id).subscribe(success=>{})
     }*/
+  setRecurring(event: any){
+    if(event.value === 'none'){
+      this.recurring = false;
+      //const startRecur = null;
+      //const daysOfWeek = null;
+    }else if(event.value === 'daily'){
+      const daysOfWeek = null;
+    }else{
+      const startRecur = new Date("2022-06-11T10:30:00");
+      const daysOfWeek:number[] = [6];
+    }
+  }
 
   ngOnInit(): void {
 

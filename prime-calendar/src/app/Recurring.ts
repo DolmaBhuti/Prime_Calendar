@@ -7,6 +7,9 @@
 //     // dayOfWeek: [Number] = [0];
 //     // startR
 //     //userId: String
+
+import { Duration } from "@fullcalendar/angular";
+
     
 // }
 // export default class RecurringEvent {
@@ -26,10 +29,12 @@
 
 export interface EventFlexible {
     eventTitle: String;
-    startTime: String;
-    endTime: String;
+    start?: Date;
+    end?: Date;
+    startTime?: Duration;
+    endTime?: Duration;
     description: String;
-    daysOfWeek?: String;
-    startRecur?: String;
+    daysOfWeek?: [Number];
+    startRecur?: Date;
     endRecur?: String;
 }
