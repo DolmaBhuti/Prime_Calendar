@@ -72,37 +72,43 @@ export class CalendarComponent implements OnInit {
       console.log('The dialog was closed, add event: '+result);
       if(result){
         this.eventTest.eventTitle = result.eventTitle;
-      this.eventTest.start = result.startTime;
-      this.eventTest.end = result.endTime;
+      this.eventTest.startTime = result.startTime;
+      this.eventTest.endTime = result.endTime;
       this.eventTest.description = result.description;
+      this.eventTest.startRecur = result.startRecur;
+      this.eventTest.endRecur = result.endRecur;
       console.log('The dialog was closed, add event: '+this.eventTest.eventTitle);
-      console.log(result);
+      console.log("receive from dialog: "+result.startRecur);
+      console.log("this.eventTest: "+this.eventTest.startRecur);
 
     const title =  this.eventTest.eventTitle.toString();
     const calendarApi = selectDate.view.calendar;
-    const start = new Date("2022-06-11T10:30:00-04:00");
-    const end = new Date('2022-06-11T12:30:00-04:00');
-    const startTime = '10:45:00';
-    const endTime = '12:45:00';
-    // const startRecur = new Date("2022-06-11T10:30:00");
-    const startRecur = null;
-    const daysOfWeek = null;
-    console.log('title: '+title); 
+
     if (title) {
-    
-      calendarApi.addEvent({
-        title,
-        // start: new Date(selectDate.startStr),
-        // end: new Date(selectDate.endStr),
-        start,
-        end,
-        startTime,
-        endTime,
+      if(this.eventTest.startRecur){
+        calendarApi.addEvent({
+        title:this.eventTest.eventTitle.toString(),
+        start:this.eventTest.startRecur,
+        startTime:this.eventTest.startTime,
+        endTime:this.eventTest.endTime,
         description: this.eventTest.description.toString(),
-        startRecur,
-        daysOfWeek
+        startRecur:this.eventTest.startRecur,
+        endRecur:this.eventTest.endRecur
+        //daysOfWeek
         //allDay: selectDate.allDay
       });
+      }else{
+        console.log("this is a non-recurring event")
+        calendarApi.addEvent({
+          title:this.eventTest.eventTitle.toString(),
+          //TODO: figure out date+duration
+          start:selectDate.startStr,
+          end:selectDate.startStr,
+          description: this.eventTest.description.toString()
+        });
+      }
+    
+      
 
     }
     calendarApi.unselect();
@@ -173,6 +179,14 @@ export class CalendarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.calService.eventGetFromApi().subscribe(data=>{
+      let events:Object[] = [];
+      for(let i=0;i<data.length;i++){
+        let event = {title:data[i].eventTitle,start:data[i].date}
+        events.push(event);
+      }
+      this.calendarOptions.events = events
+    })
 
   }
 

@@ -32,4 +32,9 @@ export class CalendarService {
       return this.http.get<any>(`${environment.userAPIBase}/events`);
     }*/
 
+    eventGetFromApi():Observable<any>{
+      console.log("get from api")
+      return this.http.get<any>(`${environment.userAPIBase}/events`)  
+    }
+
 }
