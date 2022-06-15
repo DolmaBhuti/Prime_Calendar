@@ -15,6 +15,9 @@ import { MatSelect } from '@angular/material/select';
 import { AboutComponent } from '../about/about.component';
 import { EventCreateDialogComponent } from '../event-create-dialog/event-create-dialog.component';
 
+//Display event details
+import { DisplayEventDetailsComponent } from '../display-event-details/display-event-details.component';
+
 
 @Component({
   selector: 'app-calendar',
@@ -55,6 +58,9 @@ export class CalendarComponent implements OnInit {
     //getEvents: this.handleAllEventsGet.bind(this)
     
     eventAdd: this.handleEventAdd.bind(this),
+
+    //Display events details
+    eventClick: this.handleEventClick.bind(this)
   };
   
   //Click and select a date to add event to the calendar:
@@ -76,7 +82,8 @@ export class CalendarComponent implements OnInit {
           startTime:this.eventTest.start,
           endTime:this.eventTest.end,
           description: this.eventTest.description.toString(),
-          startRecur: selectDate.startStr,
+          //Hard code time adjustment
+          startRecur: selectDate.startStr + "T04:00",
           endRecur: selectDate.endStr, //
           recurring: this.eventTest.recurring.toString()
         });
@@ -101,14 +108,14 @@ export class CalendarComponent implements OnInit {
           startRecur: selectDate.startStr,
           endRecur: selectDate.endStr,
           recurring: this.eventTest.recurring.toString(),
-          daysOfWeek: [new Date(selectDate.startStr).getDay() + 1]
+          daysOfWeek: [new Date(selectDate.startStr + "T04:00").getDay()]
         });
         calendarApi.unselect();
 
 
       } else if (result.recurring == "none") {
         this.eventTest.start = new Date(selectDate.startStr + "T" + result.start);
-        this.eventTest.end = new Date(selectDate.endStr + "T" + result.end);
+        this.eventTest.end = new Date(selectDate.startStr + "T" + result.end);
         this.eventTest.eventTitle = result.eventTitle;
         this.eventTest.description = result.description;
         this.eventTest.recurring = result.recurring;
@@ -174,15 +181,43 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  handleEventClick(info: any){
+
+    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
+    
+    
+  }
+
   ngOnInit(): void {
     this.calService.eventGetFromApi().subscribe(data=>{
+
       let events:Object[] = [];
+
       for(let i=0;i<data.length;i++){
-        let event = {title:data[i].eventTitle,start:data[i].start}
-        events.push(event);
+
+        //display single events
+
+        let eventSingle = {title:data[i].eventTitle,start:data[i].start, end:data[i].end, description: data[i].description, recurring: data[i].recurring}
+
+        events.push(eventSingle);
+
+        //display recurring
+
+        let eventRecurring = {title:data[i].eventTitle,startTime:{years:0,months:0,days:0,milliseconds:data[i].startTime},
+        endTime:{years:0,months:0,days:0,milliseconds:data[i].endTime}, 
+        startRecur: data[i].startRecur, endRecur: data[i].endRecur, daysOfWeek:data[i].daysOfWeek,
+        description: data[i].description, recurring: data[i].recurring}
+
+        events.push(eventRecurring);
+
       }
+
       this.calendarOptions.events = events
+
     })
 
   }
+
 }
+
+  
