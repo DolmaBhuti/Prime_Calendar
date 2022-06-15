@@ -7,7 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptTokenService } from './intercept-token.service';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -21,7 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { FlexLayoutModule } from '@angular/flex-layout';
-
+import {MatDialogModule} from "@angular/material/dialog";
+import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 //full calendar plug ins
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -30,6 +33,8 @@ import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 import { AboutComponent } from './about/about.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { EventCreateDialogComponent } from './event-create-dialog/event-create-dialog.component';
+import { DisplayEventDetailsComponent } from './display-event-details/display-event-details.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -42,7 +47,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     RegisterComponent,
     AboutComponent,
     LandingPageComponent,
-    CalendarComponent
+    CalendarComponent,
+    EventCreateDialogComponent,
+    DisplayEventDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -59,12 +66,22 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatInputModule,
     MatCardModule,
     MatChipsModule,
+    MatDialogModule,
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
+    MatDialogModule,
+    MatOptionModule,
+    MatSelectModule,
     FullCalendarModule // register FullCalendar with you app
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: InterceptTokenService,
+    multi: true
+    }
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

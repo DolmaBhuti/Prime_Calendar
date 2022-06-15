@@ -1,8 +1,71 @@
-
 <div>
-    <div class="sidebar">
-    </div>
-    <div>
-        <full-calendar [options]="calendarOptions"></full-calendar>
-    </div>
+  <div class="sidebar">
+  </div>
+  <div>
+    <full-calendar [options]="calendarOptions"></full-calendar>
+
+  </div>
+
 </div>
+<!--<div class="eventForm">
+    <mat-card>
+        <mat-card-content>
+          <form (ngSubmit)="onSubmit()">
+            <h2>Create New Event</h2>
+            ><br />
+            <mat-form-field class="full-width-input">
+                <label for="title">Title</label>
+                <input
+                matInput
+                name="title"
+                id="title"
+                [(ngModel)]="eventTest.eventTitle"
+                required>
+            </mat-form-field><br />
+            <mat-form-field class="full-width-input">
+                <label for="description">Description</label>
+                <input
+                matInput
+                name="description"
+                id="description"
+                [(ngModel)]="eventTest.description"
+                >
+            </mat-form-field><br />
+            <!-- <mat-form-field class="full-width-input">
+                <label for="date">Date</label>
+                <input
+                matInput
+                name="date"
+                id="date"
+                placeholder="event.date"
+                [(ngModel)]="event.date"
+                />
+            </mat-form-field><br />
+            <mat-form-field class="full-width-input">
+                <label for="startTime">Start Time</label>
+                <input
+                matInput
+                name="startTime"
+                [(ngModel)]="eventTest.startTime"
+                id="startTime"
+                />
+                <span>TO</span>
+                <input
+                matInput
+                name="endTime"
+                [(ngModel)]="eventTest.endTime"
+                id="endTime"
+                />
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-select required>
+                    <mat-option>-- None --</mat-option>
+                    <mat-option value="option">Daily</mat-option>
+                    <mat-option value="option">Weekly</mat-option>
+                    <mat-option value="option">Daily</mat-option>
+
+                </mat-select>
+                <mat-label><mat-icon>favorite</mat-icon> <b> Fancy</b> <i> label</i></mat-label>
+            </mat-form-field>
+            <mat-card-content>
+        <mat-card>-->

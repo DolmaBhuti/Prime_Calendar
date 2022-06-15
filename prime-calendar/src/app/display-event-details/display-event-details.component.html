@@ -1,0 +1,10 @@
+
+
+<h1 mat-dialog-title>{{ data.event.title }}</h1>
+<mat-dialog-content>
+<p>Description: {{data.event.extendedProps['description']}}</p>
+<p>Date - {{data.event.start | date: 'fullDate'}}</p>
+<p>Start Time: {{data.event.start | date:'shortTime'}} TO {{data.event.end | date:'shortTime'}}</p>
+<p>Recurring: {{data.event.extendedProps['recurring']}}</p>
+</mat-dialog-content>
+
