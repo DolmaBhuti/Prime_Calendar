@@ -17,10 +17,4 @@ export class EventCreateDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  set(event: any){
-    this.cal.setRecurring(event);
-  }
-
-
 }

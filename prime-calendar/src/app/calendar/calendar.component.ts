@@ -22,11 +22,7 @@ import { EventCreateDialogComponent } from '../event-create-dialog/event-create-
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  // event:Events = {eventTitle: "", startTime:"", endTime: "",description: "", date: new Date(), dayOfWeek: [0],recurring: false};
-  // eventS:SingleEvent = { title:"", start:"", end:"", description:"" };
-  // eventR:RecurringEvent = { title:"", start: "", end: "", description :"", daysOfWeek:[0], startRecur: "", endRecur: "" };
-
-  eventTest:EventFlexible = { eventTitle:"", start: new Date(), end:new Date(), description:""}; // <---------
+  eventTest:EventFlexible = { eventTitle:"", description:"", recurring:""}; // <---------
   
   constructor(private calService : CalendarService,public dialog:MatDialog) { }
   private calendarSub: Subscription | undefined;
@@ -63,118 +59,118 @@ export class CalendarComponent implements OnInit {
   
   //Click and select a date to add event to the calendar:
   handleDateSelect(selectDate: DateSelectArg) {
-
-    //const title = prompt('Please enter a new title for your event');
-
     //generate pop up dialog:
     let dialogRef = this.dialog.open(EventCreateDialogComponent,{width:'400px',data:this.eventTest})
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed, add event: '+result);
-      if(result){
+      if(result.recurring == "daily") {
         this.eventTest.eventTitle = result.eventTitle;
-      this.eventTest.startTime = result.startTime;
-      this.eventTest.endTime = result.endTime;
-      this.eventTest.description = result.description;
-      this.eventTest.startRecur = result.startRecur;
-      this.eventTest.endRecur = result.endRecur;
-      console.log('The dialog was closed, add event: '+this.eventTest.eventTitle);
-      console.log("receive from dialog: "+result.startRecur);
-      console.log("this.eventTest: "+this.eventTest.startRecur);
-
-    const title =  this.eventTest.eventTitle.toString();
-    const calendarApi = selectDate.view.calendar;
-
-    if (title) {
-      if(this.eventTest.startRecur){
+        this.eventTest.startTime = result.start;
+        this.eventTest.endTime = result.end;
+        this.eventTest.description = result.description;
+        // this.eventTest.startRecur = result.start;
+        // this.eventTest.endRecur = result.endRecur;
+        this.eventTest.recurring = result.recurring;
+        const calendarApi = selectDate.view.calendar;
         calendarApi.addEvent({
-        title:this.eventTest.eventTitle.toString(),
-        start:this.eventTest.startRecur,
-        startTime:this.eventTest.startTime,
-        endTime:this.eventTest.endTime,
-        description: this.eventTest.description.toString(),
-        startRecur:this.eventTest.startRecur,
-        endRecur:this.eventTest.endRecur
-        //daysOfWeek
-        //allDay: selectDate.allDay
-      });
-      }else{
-        console.log("this is a non-recurring event")
+          title:this.eventTest.eventTitle.toString(),
+          startTime:this.eventTest.start,
+          endTime:this.eventTest.end,
+          description: this.eventTest.description.toString(),
+          startRecur: selectDate.startStr,
+          endRecur: selectDate.endStr, //
+          recurring: this.eventTest.recurring.toString()
+        });
+        calendarApi.unselect();
+
+
+      } else if (result.recurring == "weekly") {
+        this.eventTest.eventTitle = result.eventTitle;
+        this.eventTest.startTime = result.start;
+        this.eventTest.endTime = result.end;
+        this.eventTest.description = result.description;
+        // this.eventTest.startRecur = result.start;
+        // this.eventTest.endRecur = result.endRecur;
+        this.eventTest.recurring = result.recurring;
+
+        const calendarApi = selectDate.view.calendar;
+        calendarApi.addEvent({
+          title:this.eventTest.eventTitle.toString(),
+          startTime:this.eventTest.start,
+          endTime:this.eventTest.end,
+          description: this.eventTest.description.toString(),
+          startRecur: selectDate.startStr,
+          endRecur: selectDate.endStr,
+          recurring: this.eventTest.recurring.toString(),
+          daysOfWeek: [new Date(selectDate.startStr).getDay() + 1]
+        });
+        calendarApi.unselect();
+
+
+      } else if (result.recurring == "none") {
+        this.eventTest.start = new Date(selectDate.startStr + "T" + result.start);
+        this.eventTest.end = new Date(selectDate.endStr + "T" + result.end);
+        this.eventTest.eventTitle = result.eventTitle;
+        this.eventTest.description = result.description;
+        this.eventTest.recurring = result.recurring;
+        const calendarApi = selectDate.view.calendar;
+
         calendarApi.addEvent({
           title:this.eventTest.eventTitle.toString(),
           //TODO: figure out date+duration
-          start:selectDate.startStr,
-          end:selectDate.startStr,
-          description: this.eventTest.description.toString()
+          start:this.eventTest.start, //concat after
+          end:this.eventTest.end, //concat after
+          description: this.eventTest.description.toString(),
+          recurring: this.eventTest.recurring.toString()
         });
       }
-    
-      
-
-    }
-    calendarApi.unselect();
-      }}); // clear date selection
+    });
   }
-
-  recurring : Boolean = true; // dont forget
-
 
   //Convert the added event to our custom Event object, and pass to API server:
   handleEventAdd(addInfo: EventAddArg){
-    if (this.recurring == true) {
-          //console.log(addInfo.event.title+" "+addInfo.event.start+" "+addInfo.event.end+" "+addInfo.event.allDay)
+    if (addInfo.event._def.extendedProps['recurring'] == "daily") {
         var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
-        // start: addInfo.event.start?.toString()!,
-        // end: addInfo.event.end?.toString()!,
         start: addInfo.event.start!,
         end: addInfo.event.end!,
+        startTime : addInfo.event._def.recurringDef?.typeData.startTime.milliseconds,
+        endTime : addInfo.event._def.recurringDef?.typeData.endTime.milliseconds,
         description: addInfo.event.extendedProps['description'],
-        // startRecur: addInfo.event._def.recurringDef?.typeData.startRecur?.toString()!,
-        // endRecur : addInfo.event._def.recurringDef?.typeData.endRecur?.toString()!,
         startRecur: addInfo.event._def.recurringDef?.typeData.startRecur!,
         endRecur : addInfo.event._def.recurringDef?.typeData.endRecur!,
         daysOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
-        //allDay: addInfo.event.allDay
-        //date: new Date()}
-        //console.log(eventNeedsToAdd)
+        recurring: addInfo.event._def.extendedProps['recurring']
       }
-      console.log(addInfo);
-      console.log(addEvent);
-      console.log(addInfo.event.extendedProps['description']);
-      console.log(addInfo.event._instance?.range.start);
-      console.log(addInfo.event._instance?.range.end);
+      console.log("handleEventAdd recurring" + addEvent.startTime);
+      console.log("handleEventAdd recurring" + addEvent.endTime);
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
-    } else {
+    } else if (addInfo.event._def.extendedProps['recurring'] == "weekly") {
       var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
-        //start: addInfo.event.start?.toString()!,
-        //end: addInfo.event.end?.toString()!,
+        start: addInfo.event.start!,
+        end: addInfo.event.end!,
+        startTime: addInfo.event._def.recurringDef?.typeData.startTime.milliseconds,
+        endTime: addInfo.event._def.recurringDef?.typeData.endTime.milliseconds,
+        description: addInfo.event.extendedProps['description'],
+        startRecur: addInfo.event._def.recurringDef?.typeData.startRecur!,
+        endRecur : addInfo.event._def.recurringDef?.typeData.endRecur!,
+        daysOfWeek: addInfo.event._def.recurringDef?.typeData.daysOfWeek,
+        recurring: addInfo.event._def.extendedProps['recurring']
+    }
+    console.log("handleEventAdd recurring" + addInfo);
+    this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+
+
+    } else if (addInfo.event._def.extendedProps['recurring'] == "none") {
+      var addEvent:EventFlexible = {
+        eventTitle: addInfo.event.title,
         start: addInfo.event.start!,
         end: addInfo.event.end!,
         description: addInfo.event.extendedProps['description'],
-        //allDay: addInfo.event.allDay,
+        recurring: addInfo.event._def.extendedProps['recurring']
       }
-      console.log(addEvent);
-      console.log(addInfo.event.extendedProps['description']);
-      console.log(addInfo.event._instance?.range.start);
-      console.log(addInfo.event._instance?.range.end);
+      console.log("handleEventAdd single" + addEvent);
       this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
-    }
-  }
-
-    /*handleAllEventsGet(id: String){
-      this.calendarSub = this.calService.eventGet(id).subscribe(success=>{})
-    }*/
-  setRecurring(event: any){
-    if(event.value === 'none'){
-      this.recurring = false;
-      //const startRecur = null;
-      //const daysOfWeek = null;
-    }else if(event.value === 'daily'){
-      const daysOfWeek = null;
-    }else{
-      const startRecur = new Date("2022-06-11T10:30:00");
-      const daysOfWeek:number[] = [6];
     }
   }
 
@@ -182,18 +178,11 @@ export class CalendarComponent implements OnInit {
     this.calService.eventGetFromApi().subscribe(data=>{
       let events:Object[] = [];
       for(let i=0;i<data.length;i++){
-        let event = {title:data[i].eventTitle,start:data[i].date}
+        let event = {title:data[i].eventTitle,start:data[i].start}
         events.push(event);
       }
       this.calendarOptions.events = events
     })
 
   }
-
-  onSubmit(): void {
-    if(this.eventTest.eventTitle != ""){
-      
-    }
-  }
-
 }

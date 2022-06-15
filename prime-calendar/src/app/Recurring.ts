@@ -31,10 +31,11 @@ export interface EventFlexible {
     eventTitle: String;
     start?: Date;
     end?: Date;
-    startTime?: Duration;
-    endTime?: Duration;
+    startTime?: Number;
+    endTime?: Number;
     description: String;
     daysOfWeek?: [Number];
     startRecur?: Date;
     endRecur?: String;
+    recurring: String;
 }
