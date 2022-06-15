@@ -1,0 +1,4 @@
+.createForm{
+    display: flex;
+    flex-direction: column;
+}
