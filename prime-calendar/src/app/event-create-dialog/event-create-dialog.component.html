@@ -2,7 +2,7 @@
 <div mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Event Title</mat-label>
-    <input matInput [(ngModel)]="data.eventTitle">
+    <input matInput [(ngModel)]="data.eventTitle" required>
 </mat-form-field>
 <mat-form-field appearance="fill">
     <mat-label>Start time</mat-label>
@@ -20,7 +20,7 @@
     <input matInput [(ngModel)]="data.description">
   </mat-form-field>
   <mat-form-field appearance="fill">
-    <mat-select [(ngModel)]="data.recurring">
+    <mat-select [(ngModel)]="data.recurring" required>
       <mat-option value="none">-- None --</mat-option>
       <mat-option value="daily">Daily</mat-option>
       <mat-option value="weekly">Weekly</mat-option>
