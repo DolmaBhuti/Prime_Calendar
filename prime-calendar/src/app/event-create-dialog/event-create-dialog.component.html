@@ -6,11 +6,14 @@
 </mat-form-field>
 <mat-form-field appearance="fill">
     <mat-label>Start time</mat-label>
-    <input matInput [(ngModel)]="data.start">
+    <!-- <input matInput [(ngModel)]="data.start"> -->
+    <input matInput [(ngModel)]="data.start" type="time"
+    min="00:00" max="23:59" required>
 </mat-form-field>
 <mat-form-field appearance="fill">
     <mat-label>End time</mat-label>
-    <input matInput [(ngModel)]="data.end">
+    <input matInput [(ngModel)]="data.end" type="time"
+    min="00:00" max="23:59" required>
 </mat-form-field>
 <mat-form-field appearance="fill">
     <mat-label>Description</mat-label>
