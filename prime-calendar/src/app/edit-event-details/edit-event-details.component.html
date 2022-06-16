@@ -1,0 +1,37 @@
+<mat-card-content>
+    <h1 mat-dialog-title>Event Create</h1>
+    <div mat-dialog-content class="createForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Event Title</mat-label>
+        <input matInput [(ngModel)]="editableEvent.eventTitle" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="editableEvent.description">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Start time</mat-label>
+        <input matInput [(ngModel)]="editableEvent.start" type="time"
+        min="00:00" max="23:59" required>
+        
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>End time</mat-label>
+        <input matInput [(ngModel)]="editableEvent.end" type="time"
+        min="00:00" max="23:59" required>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill">
+        <mat-select [(ngModel)]="editableEvent.recurring" required>
+          <mat-option value="none">-- None --</mat-option>
+          <mat-option value="daily">Daily</mat-option>
+          <mat-option value="weekly">Weekly</mat-option>
+      </mat-select>
+        <mat-label>Recurring</mat-label>
+    </mat-form-field>
+    <mat-card-content>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">Cancel</button>
+      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+    </div>
+  </mat-card-content>

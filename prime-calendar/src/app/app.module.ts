@@ -35,6 +35,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventCreateDialogComponent } from './event-create-dialog/event-create-dialog.component';
 import { DisplayEventDetailsComponent } from './display-event-details/display-event-details.component';
+import { EditEventDetailsComponent } from './edit-event-details/edit-event-details.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -49,7 +50,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     LandingPageComponent,
     CalendarComponent,
     EventCreateDialogComponent,
-    DisplayEventDetailsComponent
+    DisplayEventDetailsComponent,
+    EditEventDetailsComponent
   ],
   imports: [
     BrowserModule,

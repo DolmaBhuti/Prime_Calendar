@@ -17,6 +17,7 @@ import { EventCreateDialogComponent } from '../event-create-dialog/event-create-
 
 //Display event details
 import { DisplayEventDetailsComponent } from '../display-event-details/display-event-details.component';
+import { ConditionalExpr } from '@angular/compiler';
 
 
 @Component({
@@ -60,7 +61,7 @@ export class CalendarComponent implements OnInit {
     eventAdd: this.handleEventAdd.bind(this),
 
     //Display events details
-    eventClick: this.handleEventClick.bind(this)
+    eventClick: this.handleEventClick.bind(this)    
   };
   
   //Click and select a date to add event to the calendar:
@@ -185,8 +186,9 @@ export class CalendarComponent implements OnInit {
 
     let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
     
-    
   }
+
+
 
   ngOnInit(): void {
     this.calService.eventGetFromApi().subscribe(data=>{
@@ -197,13 +199,14 @@ export class CalendarComponent implements OnInit {
 
         //display single events
 
-        let eventSingle = {title:data[i].eventTitle,start:data[i].start, end:data[i].end, description: data[i].description, recurring: data[i].recurring}
+        let eventSingle = {id: data[i]._id, title:data[i].eventTitle,start:data[i].start, end:data[i].end, description: data[i].description, recurring: data[i].recurring}
 
         events.push(eventSingle);
+        console.log(eventSingle.id);
 
         //display recurring
 
-        let eventRecurring = {title:data[i].eventTitle,startTime:{years:0,months:0,days:0,milliseconds:data[i].startTime},
+        let eventRecurring = {id: data[i]._id,title:data[i].eventTitle,startTime:{years:0,months:0,days:0,milliseconds:data[i].startTime},
         endTime:{years:0,months:0,days:0,milliseconds:data[i].endTime}, 
         startRecur: data[i].startRecur, endRecur: data[i].endRecur, daysOfWeek:data[i].daysOfWeek,
         description: data[i].description, recurring: data[i].recurring}

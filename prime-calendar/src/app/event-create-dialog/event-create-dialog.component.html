@@ -12,7 +12,6 @@
   </mat-form-field>
   <mat-form-field appearance="fill">
       <mat-label>Start time</mat-label>
-      <!-- <input matInput [(ngModel)]="data.start"> -->
       <input matInput [(ngModel)]="data.start" type="time"
       min="00:00" max="23:59" required>
       
@@ -31,14 +30,6 @@
     </mat-select>
       <mat-label>Recurring</mat-label>
   </mat-form-field>
-  <!-- <mat-form-field appearance="fill">
-    <mat-label>Recurring start date</mat-label>
-    <input matInput [(ngModel)]="data.startRecur">
-  </mat-form-field> -->
-  <!-- <mat-form-field appearance="fill">
-    <mat-label>Recurring end date</mat-label>
-    <input matInput [(ngModel)]="data.endRecur">
-  </mat-form-field> -->
   <mat-card-content>
   <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
