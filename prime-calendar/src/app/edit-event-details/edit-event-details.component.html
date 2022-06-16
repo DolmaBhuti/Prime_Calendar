@@ -32,6 +32,6 @@
     <mat-card-content>
     <div mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>
-      <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+      <button mat-button (click) = "onSubmit()" [mat-dialog-close]="data" cdkFocusInitial>Create</button>
     </div>
   </mat-card-content>

@@ -37,4 +37,8 @@ export class CalendarService {
       return this.http.get<any>(`${environment.userAPIBase}/events`)  
     }
 
+    eventUpdate(event: EventFlexible, id: any):Observable<any>{
+      return this.http.put<any>(`${environment.userAPIBase}/events/${id}`, event);
+    }
+
 }
