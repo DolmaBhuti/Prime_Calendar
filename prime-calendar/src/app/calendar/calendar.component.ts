@@ -66,6 +66,7 @@ export class CalendarComponent implements OnInit {
   
   //Click and select a date to add event to the calendar:
   handleDateSelect(selectDate: DateSelectArg) {
+    console.log(selectDate.startStr);
     //generate pop up dialog:
     let dialogRef = this.dialog.open(EventCreateDialogComponent,{width:'400px',data:this.eventTest})
     dialogRef.afterClosed().subscribe(result => {
