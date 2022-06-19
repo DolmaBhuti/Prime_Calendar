@@ -48,6 +48,7 @@ export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
+    editable: true,
     selectable: true,
 
     select: this.handleDateSelect.bind(this), // bind is important!
@@ -61,7 +62,9 @@ export class CalendarComponent implements OnInit {
     eventAdd: this.handleEventAdd.bind(this),
 
     //Display events details
-    eventClick: this.handleEventClick.bind(this)    
+    eventClick: this.handleEventClick.bind(this), 
+
+    eventDrop: this.handleEventDrop.bind(this)
   };
   
   //Click and select a date to add event to the calendar:
@@ -81,6 +84,7 @@ export class CalendarComponent implements OnInit {
         const calendarApi = selectDate.view.calendar;
         calendarApi.addEvent({
           title:this.eventTest.eventTitle.toString(),
+          // groupId:this.eventTest.groupId?.toString(),
           startTime:this.eventTest.start,
           endTime:this.eventTest.end,
           description: this.eventTest.description.toString(),
@@ -104,6 +108,7 @@ export class CalendarComponent implements OnInit {
         const calendarApi = selectDate.view.calendar;
         calendarApi.addEvent({
           title:this.eventTest.eventTitle.toString(),
+          // groupId:this.eventTest.groupId?.toString(),
           startTime:this.eventTest.start,
           endTime:this.eventTest.end,
           description: this.eventTest.description.toString(),
@@ -131,6 +136,7 @@ export class CalendarComponent implements OnInit {
           description: this.eventTest.description.toString(),
           recurring: this.eventTest.recurring.toString()
         });
+        
       }
     });
   }
@@ -184,6 +190,12 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(info: any){
+
+    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
+    
+  }
+
+  handleEventDrop(info: any){
 
     let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
     

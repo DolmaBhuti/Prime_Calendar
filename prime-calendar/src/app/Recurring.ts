@@ -29,6 +29,7 @@ import { Duration } from "@fullcalendar/angular";
 
 export interface EventFlexible {
     eventTitle: String;
+    groupId?: String; //
     start?: Date;
     end?: Date;
     startTime?: Number;

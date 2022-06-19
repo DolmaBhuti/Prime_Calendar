@@ -24,10 +24,19 @@ export class EditEventDetailsComponent implements OnInit {
   editableEvent: EventFlexible = {
     eventTitle: this.data.event.title, 
     description: this.data.event.extendedProps['description'], 
-    start:new Date(this.data.event.start!),
-    end:new Date(this.data.event.end!),
-    startTime: this.data.event._def.recurringDef?.typeData.startTime.milliseconds,
-    endTime: this.data.event._def.recurringDef?.typeData.endTime.milliseconds,
+    // start:new Date(this.data.event.start!),
+    // end:new Date(this.data.event.end!),
+    // startTime: this.data.event.start!.getTime() - new Date(this.data.event.startStr.split("T", 2)[0] + "T00:00").getTime(),
+    // endTime: this.data.event.end!.getTime() - new Date(this.data.event.startStr.split("T", 2)[0] + "T00:00").getTime(),
+
+    // startTime: new Date(this.data.event.start!).getTime() - new Date(this.data.event.startStr.split("T", 2)[0] + "T00:00").getTime(),
+    // endTime: new Date(this.data.event.end!).getTime() - new Date(this.data.event.startStr.split("T", 2)[0] + "T00:00").getTime(),
+    // startTime: new Date(this.data.event.start!),
+    // startTime: this.data.event._def.recurringDef?.typeData.startTime.milliseconds,
+    // endTime: this.data.event._def.recurringDef?.typeData.endTime.milliseconds,
+    // startTime : this.data.event.start!.getDate() - new Date(this.data.event.startStr.split("T", 2)[0]).getTime(),
+    // endTime : this.data.event.end!.getDate() - new Date(this.data.event.startStr.split("T", 2)[0]).getTime(),
+
     startRecur:this.data.event._def.recurringDef?.typeData.startRecur!,
     endRecur:this.data.event._def.recurringDef?.typeData.endRecur!,
     daysOfWeek: [new Date(this.data.event.start!).getDay()],
@@ -42,7 +51,9 @@ export class EditEventDetailsComponent implements OnInit {
   }
   
   onSubmit():void{
+
     var dateStr = this.data.event.startStr.split("T", 2);
+
     if (this.editableEvent.recurring == "none") {
         var addEvent: EventFlexible = {
           eventTitle: this.editableEvent.eventTitle,
@@ -53,18 +64,26 @@ export class EditEventDetailsComponent implements OnInit {
           recurring: this.editableEvent.recurring
         }
         // console.log(this.updateData.oldEvent.startStr)
+        // console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
+        console.log(addEvent);
         this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{console.log()});
       }else if(this.editableEvent.recurring == "daily"){
         var addEvent: EventFlexible = {
             eventTitle: this.editableEvent.eventTitle,
-            start: new Date(dateStr[0].toString() + "T" + this.editableEvent.start),
-            end: new Date(dateStr[0].toString() + "T" + this.editableEvent.end),
-            startTime : new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() / 1000,
-            endTime : new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() / 1000,
+            // start: new Date(dateStr[0].toString() + "T" + this.editableEvent.start),
+            // end: new Date(dateStr[0].toString() + "T" + this.editableEvent.end),
+            // startTime : new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() / 1000,
+            // endTime : new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() / 1000,
+
+            startTime: new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() - new Date(dateStr[0]+"T00:00").getTime(),
+            endTime: new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() - new Date(dateStr[0]+"T00:00").getTime(),
+
             description: this.editableEvent.description,
             //description: "daily test description",
-            startRecur: this.editableEvent.startRecur,
-            endRecur : this.editableEvent.endRecur,
+            // startRecur: this.editableEvent.startRecur,  // insufficient logic here
+            startRecur: new Date(dateStr[0].toString() + "T" + this.editableEvent.start),
+            // endRecur : this.editableEvent.endRecur, // insufficient logic here **** need to find current range of dates and
+            // apply to new startRecur
             //daysOfWeek: undefined,
             daysOfWeek: this.editableEvent.daysOfWeek,
             recurring: this.editableEvent.recurring
@@ -75,17 +94,21 @@ export class EditEventDetailsComponent implements OnInit {
       }else if(this.editableEvent.recurring == "weekly"){
         var addEvent: EventFlexible = {
             eventTitle: this.editableEvent.eventTitle,
-            start: this.editableEvent.start,
-            end: this.editableEvent.end,
-            startTime: this.editableEvent.startTime,
-            endTime: this.editableEvent.endTime,
+
+            startTime: new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() - new Date(dateStr[0]+"T00:00").getTime(),
+            endTime: new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() - new Date(dateStr[0]+"T00:00").getTime(),
+            
             description: this.editableEvent.description,
             startRecur: this.editableEvent.startRecur,
             endRecur : this.editableEvent.endRecur,
             daysOfWeek: this.editableEvent.daysOfWeek,
             recurring: this.editableEvent.recurring,
           }
-        console.log(addEvent.daysOfWeek)
+        // console.log("Start: " + addEvent.start + "\nStartTime: " + addEvent + "\nDays of Week: " + addEvent.daysOfWeek);
+        console.log(addEvent);
+        // console.log(this.editableEvent.start!.getTime() - new Date(dateStr[0]+"T00:00").getTime());
+        console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
+        console.log(new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() - new Date(dateStr[0]+"T00:00").getTime());
         this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{});
       }
     }

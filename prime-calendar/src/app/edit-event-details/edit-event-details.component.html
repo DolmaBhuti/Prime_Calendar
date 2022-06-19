@@ -1,5 +1,5 @@
 <mat-card-content>
-    <h1 mat-dialog-title>Event Create</h1>
+    <h1 mat-dialog-title>Event Edit</h1>
     <div mat-dialog-content class="createForm">
       <mat-form-field appearance="fill">
         <mat-label>Event Title</mat-label>
@@ -32,6 +32,6 @@
     <mat-card-content>
     <div mat-dialog-actions>
       <button mat-button (click)="onNoClick()">Cancel</button>
-      <button mat-button (click) = "onSubmit()" [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+      <button mat-button (click) = "onSubmit()" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
     </div>
   </mat-card-content>
