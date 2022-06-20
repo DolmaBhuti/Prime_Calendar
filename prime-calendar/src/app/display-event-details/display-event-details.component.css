@@ -1,6 +1,53 @@
-td {
-    margin: 10%;
+.center {
+    border: 8px solid #072F5F;
+    padding: 10px;
+    border-radius: 30px;
+    text-align: center;
+    }
+
+.center .title{
+    font-size:xx-large;
+    font-weight: bold;
+    background-color: #072F5F;
+    border-radius: 70px;
+    color: aliceblue;
+
 }
-table{
-    align-items: center;
+
+.col{
+    font-weight: bold;
 }
+.col1{
+    font-weight: normal;
+    font-size: medium;
+    background-color: #072F5F;;
+    
+    color: aliceblue;
+    padding-left: 20px;
+    padding-right: 15px;
+}
+
+button {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 8px 28px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 10px;
+    border: 2px solid #072F5F;
+    color: black;
+    line-height: 7px;
+  }
+  button:hover {
+    background: #1261A0;
+    border: 2px solid white;
+    color: white;
+  }
+
+   #delete:hover{
+    background: red;
+    border: 2px solid white;
+    color: white;
+  }
