@@ -15,17 +15,17 @@
     <mat-form-field appearance="fill">
         <mat-label>Start time</mat-label>
         <input matInput [(ngModel)]="editableEvent.start" type="time"
-        min="00:00" max="23:59" required>
+        min="00:00" max="23:59">
         
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>End time</mat-label>
         <input matInput [(ngModel)]="editableEvent.end" type="time"
-        min="00:00" max="23:59" required>
+        min="00:00" max="23:59" >
     </mat-form-field>
   
     <mat-form-field appearance="fill">
-        <mat-select [(ngModel)]="editableEvent.recurring" required>
+        <mat-select [(ngModel)]="editableEvent.recurring" >
           <mat-option value="none">-- None --</mat-option>
           <mat-option value="daily">Daily</mat-option>
           <mat-option value="weekly">Weekly</mat-option>

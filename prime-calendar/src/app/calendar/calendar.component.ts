@@ -158,7 +158,7 @@ export class CalendarComponent implements OnInit {
       }
       console.log("handleEventAdd recurring" + addEvent.startTime);
       console.log("handleEventAdd recurring" + addEvent.endTime);
-      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
     } else if (addInfo.event._def.extendedProps['recurring'] == "weekly") {
       var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
@@ -173,7 +173,7 @@ export class CalendarComponent implements OnInit {
         recurring: addInfo.event._def.extendedProps['recurring']
     }
     console.log("handleEventAdd recurring" + addInfo);
-    this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+    this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
 
 
     } else if (addInfo.event._def.extendedProps['recurring'] == "none") {
@@ -185,7 +185,7 @@ export class CalendarComponent implements OnInit {
         recurring: addInfo.event._def.extendedProps['recurring']
       }
       console.log("handleEventAdd single" + addEvent);
-      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
     }
   }
 
