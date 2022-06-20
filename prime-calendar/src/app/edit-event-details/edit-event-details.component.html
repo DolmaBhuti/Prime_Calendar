@@ -1,5 +1,8 @@
+
+
 <mat-card-content>
-    <h1 mat-dialog-title>Event Edit</h1>
+  <div class="center">
+    <h1 class="title" mat-dialog-title>Event Edit</h1>
     <div mat-dialog-content class="createForm">
       <mat-form-field appearance="fill">
         <mat-label>Event Title</mat-label>
@@ -29,9 +32,12 @@
       </mat-select>
         <mat-label>Recurring</mat-label>
     </mat-form-field>
+  </div>
     <mat-card-content>
-    <div mat-dialog-actions>
-      <button mat-button (click)="onNoClick()">Cancel</button>
-      <button mat-button (click) = "onSubmit()" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
+      
+    <div id="buttons" mat-dialog-actions>
+      <button mat-button class="cancel" (click)="onNoClick()">Cancel</button>
+      <button mat-button class="update" (click) = "onSubmit()" [mat-dialog-close]="data" cdkFocusInitial>Update</button>
     </div>
+  
   </mat-card-content>
