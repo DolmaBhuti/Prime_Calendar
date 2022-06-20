@@ -1,6 +1,67 @@
-td {
-    margin: 10%;
-}
-table{
-    align-items: center;
-}
+
+.center {
+    border: 8px solid #1261A0;
+    padding: 10px;
+    border-radius: 30px;
+    text-align: center;
+    }
+
+
+
+    .center .title{
+    font-size:x-large;
+    font-weight: bold;
+    background-color: #1261A0;
+    border-radius: 70px;
+    color: aliceblue;
+    }
+    #buttons {
+        padding-left: 25px;
+        padding-bottom: 20px;
+        }
+
+        #buttons .cancel {
+            font-family: "Poppins", sans-serif;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 8px 28px;
+            border-radius: 50px;
+            transition: 0.5s;
+            margin: 10px;
+            border: 2px solid red;
+            color: black;
+            line-height: 7px;
+          }
+        
+          #buttons .update {
+            font-family: "Poppins", sans-serif;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 12px;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 8px 28px;
+            border-radius: 50px;
+            transition: 0.5s;
+            margin: 10px;
+            border: 2px solid green;
+            color: black;
+            line-height: 7px;
+          }
+        
+          #buttons .cancel:hover {
+            background: red;
+            border: 2px solid white;
+            color: white;
+          }
+        
+          #buttons .update:hover {
+            background: green;
+            border: 2px solid white;
+            color: white;
+          }
+
+  
