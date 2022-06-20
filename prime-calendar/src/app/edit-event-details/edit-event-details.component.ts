@@ -66,7 +66,7 @@ export class EditEventDetailsComponent implements OnInit {
         // console.log(this.updateData.oldEvent.startStr)
         // console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
         console.log(addEvent);
-        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{console.log()});
+        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }else if(this.editableEvent.recurring == "daily"){
         var addEvent: EventFlexible = {
             eventTitle: this.editableEvent.eventTitle,
@@ -90,7 +90,7 @@ export class EditEventDetailsComponent implements OnInit {
         }
         console.log("milisec: " + new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() / 1000);
         console.log(addEvent.daysOfWeek);
-        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{});
+        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }else if(this.editableEvent.recurring == "weekly"){
         var addEvent: EventFlexible = {
             eventTitle: this.editableEvent.eventTitle,
@@ -109,7 +109,7 @@ export class EditEventDetailsComponent implements OnInit {
         // console.log(this.editableEvent.start!.getTime() - new Date(dateStr[0]+"T00:00").getTime());
         console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
         console.log(new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() - new Date(dateStr[0]+"T00:00").getTime());
-        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{});
+        this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }
     }
 }
