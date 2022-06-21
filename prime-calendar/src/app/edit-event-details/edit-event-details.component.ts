@@ -37,11 +37,25 @@ export class EditEventDetailsComponent implements OnInit {
     // startTime : this.data.event.start!.getDate() - new Date(this.data.event.startStr.split("T", 2)[0]).getTime(),
     // endTime : this.data.event.end!.getDate() - new Date(this.data.event.startStr.split("T", 2)[0]).getTime(),
 
+    // start: this.data.event.start!.toTimeString(),
+    // start: this.data.event.start!,
+
+    start: (this.data.event.start!.getHours() < 10 ? "0" + this.data.event.start!.getHours() : this.data.event.start!.getHours()) + ":"
+    + (this.data.event.start!.getMinutes() < 10 ? "0" + this.data.event.start!.getMinutes() : this.data.event.start!.getMinutes()),
+    end: (this.data.event.end!.getHours() < 10 ? "0" + this.data.event.end!.getHours() : this.data.event.end!.getHours()) + ":"
+    + (this.data.event.end!.getMinutes() < 10 ? "0" + this.data.event.end!.getMinutes() : this.data.event.end!.getMinutes()),
+
     startRecur:this.data.event._def.recurringDef?.typeData.startRecur!,
     endRecur:this.data.event._def.recurringDef?.typeData.endRecur!,
     daysOfWeek: [new Date(this.data.event.start!).getDay()],
-    recurring: this.data.event.extendedProps['recurring']
+    recurring: this.data.event.extendedProps['recurring'],
   }
+
+  // startString = (this.data.event.start!.getHours() < 10 ? "0" + this.data.event.start!.getHours() : this.data.event.start!.getHours()) + ":"
+  // + (this.data.event.start!.getMinutes() < 10 ? "0" + this.data.event.start!.getMinutes() : this.data.event.start!.getMinutes());
+  // endString = (this.data.event.end!.getHours() < 10 ? "0" + this.data.event.end!.getHours() : this.data.event.end!.getHours()) + ":"
+  // + (this.data.event.end!.getMinutes() < 10 ? "0" + this.data.event.end!.getMinutes() : this.data.event.end!.getMinutes())
+
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -65,7 +79,9 @@ export class EditEventDetailsComponent implements OnInit {
         }
         // console.log(this.updateData.oldEvent.startStr)
         // console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
-        console.log(addEvent);
+        // console.log(this.testEnd + " TYPE: " + typeof(this.testEnd));
+        // console.log(this.editableEvent.tempString + " TYPE: " + typeof(this.editableEvent.tempString));
+        // console.log(addEvent);
         this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }else if(this.editableEvent.recurring == "daily"){
         var addEvent: EventFlexible = {
@@ -89,8 +105,8 @@ export class EditEventDetailsComponent implements OnInit {
             daysOfWeek: this.editableEvent.daysOfWeek,
             recurring: this.editableEvent.recurring
         }
-        console.log("milisec: " + new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() / 1000);
-        console.log(addEvent.daysOfWeek);
+        // console.log("milisec: " + new Date(dateStr[0].toString() + "T" + this.endString).getTime() / 1000);
+        // console.log(addEvent.daysOfWeek);
         this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }else if(this.editableEvent.recurring == "weekly"){
         var addEvent: EventFlexible = {
@@ -108,10 +124,10 @@ export class EditEventDetailsComponent implements OnInit {
             recurring: this.editableEvent.recurring,
           }
         // console.log("Start: " + addEvent.start + "\nStartTime: " + addEvent + "\nDays of Week: " + addEvent.daysOfWeek);
-        console.log(addEvent);
+        // console.log(addEvent);
         // console.log(this.editableEvent.start!.getTime() - new Date(dateStr[0]+"T00:00").getTime());
-        console.log(this.editableEvent.start + " TYPE: " + typeof(this.editableEvent.start));
-        console.log(new Date(dateStr[0].toString() + "T" + this.editableEvent.start).getTime() - new Date(dateStr[0]+"T00:00").getTime());
+        // console.log(this.editableEvent.start + " TYPE: " + typeof(this.startString));
+        // console.log(new Date(dateStr[0].toString() + "T" + this.startString).getTime() - new Date(dateStr[0]+"T00:00").getTime());
         this.calendarSub = this.calService.eventUpdate(addEvent, this.data.event.id).subscribe(success=>{window.location.reload();});
       }
     }
