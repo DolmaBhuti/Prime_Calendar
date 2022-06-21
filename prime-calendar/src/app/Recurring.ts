@@ -29,13 +29,14 @@ import { Duration } from "@fullcalendar/angular";
 
 export interface EventFlexible {
     eventTitle: String;
-    start?: Date;
-    end?: Date;
+    groupId?: String; //
+    start?: any;
+    end?: any;
     startTime?: Number;
     endTime?: Number;
     description: String;
     daysOfWeek?: [Number];
     startRecur?: Date;
-    endRecur?: String;
+    endRecur?: Date;
     recurring: String;
 }

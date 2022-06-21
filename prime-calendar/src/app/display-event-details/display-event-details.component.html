@@ -1,21 +1,28 @@
 
-
-<h1 mat-dialog-title>{{ data.event.title }}</h1>
+<div class="center">
+<h1 class ="title" mat-dialog-title>{{ data.event.title }}</h1>
 <div>
     <dl class="row">
-        <dt class="col">Description </dt>
+        <dt class="col1">Description </dt>
         <dd class="col">{{data.event.extendedProps['description']}}</dd>
       </dl>
       <dl class="row">
-        <dt class="col">Date</dt>
+        <dt class="col1">Date</dt>
         <dd class="col">{{data.event.start | date: 'fullDate'}}</dd>
       </dl>
       <dl class="row">
-        <dt class="col">Start Time</dt>
+        <dt class="col1">Start Time</dt>
         <dd class="col">{{data.event.start | date:'shortTime'}} TO {{data.event.end | date:'shortTime'}}</dd>
       </dl>
       <dl class="row">
-        <dt class="col">Recurring</dt>
+        <dt class="col1">Recurring</dt>
         <dd class="col">{{data.event.extendedProps['recurring']}}</dd>
       </dl>
+</div>
+<div>
+  <button mat-button (click)="clickDisplay()">Edit Events</button>
+</div>
+<div>
+  <button id="delete" mat-button (click)="deleteBtn()">Delete Event</button>
+</div>
 </div>

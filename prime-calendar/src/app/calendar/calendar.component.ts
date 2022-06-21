@@ -17,6 +17,7 @@ import { EventCreateDialogComponent } from '../event-create-dialog/event-create-
 
 //Display event details
 import { DisplayEventDetailsComponent } from '../display-event-details/display-event-details.component';
+import { ConditionalExpr } from '@angular/compiler';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
+    editable: true,
     selectable: true,
 
     select: this.handleDateSelect.bind(this), // bind is important!
@@ -60,11 +62,14 @@ export class CalendarComponent implements OnInit {
     eventAdd: this.handleEventAdd.bind(this),
 
     //Display events details
-    eventClick: this.handleEventClick.bind(this)
+    eventClick: this.handleEventClick.bind(this), 
+
+    eventDrop: this.handleEventDrop.bind(this)
   };
   
   //Click and select a date to add event to the calendar:
   handleDateSelect(selectDate: DateSelectArg) {
+    console.log(selectDate.startStr);
     //generate pop up dialog:
     let dialogRef = this.dialog.open(EventCreateDialogComponent,{width:'400px',data:this.eventTest})
     dialogRef.afterClosed().subscribe(result => {
@@ -79,6 +84,7 @@ export class CalendarComponent implements OnInit {
         const calendarApi = selectDate.view.calendar;
         calendarApi.addEvent({
           title:this.eventTest.eventTitle.toString(),
+          // groupId:this.eventTest.groupId?.toString(),
           startTime:this.eventTest.start,
           endTime:this.eventTest.end,
           description: this.eventTest.description.toString(),
@@ -102,6 +108,7 @@ export class CalendarComponent implements OnInit {
         const calendarApi = selectDate.view.calendar;
         calendarApi.addEvent({
           title:this.eventTest.eventTitle.toString(),
+          // groupId:this.eventTest.groupId?.toString(),
           startTime:this.eventTest.start,
           endTime:this.eventTest.end,
           description: this.eventTest.description.toString(),
@@ -129,6 +136,7 @@ export class CalendarComponent implements OnInit {
           description: this.eventTest.description.toString(),
           recurring: this.eventTest.recurring.toString()
         });
+        
       }
     });
   }
@@ -150,7 +158,7 @@ export class CalendarComponent implements OnInit {
       }
       console.log("handleEventAdd recurring" + addEvent.startTime);
       console.log("handleEventAdd recurring" + addEvent.endTime);
-      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
     } else if (addInfo.event._def.extendedProps['recurring'] == "weekly") {
       var addEvent:EventFlexible = {
         eventTitle: addInfo.event.title,
@@ -165,7 +173,7 @@ export class CalendarComponent implements OnInit {
         recurring: addInfo.event._def.extendedProps['recurring']
     }
     console.log("handleEventAdd recurring" + addInfo);
-    this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+    this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
 
 
     } else if (addInfo.event._def.extendedProps['recurring'] == "none") {
@@ -177,7 +185,7 @@ export class CalendarComponent implements OnInit {
         recurring: addInfo.event._def.extendedProps['recurring']
       }
       console.log("handleEventAdd single" + addEvent);
-      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{})
+      this.calendarSub = this.calService.eventAdd(addEvent).subscribe(success=>{window.location.reload();})
     }
   }
 
@@ -185,8 +193,15 @@ export class CalendarComponent implements OnInit {
 
     let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
     
+  }
+
+  handleEventDrop(info: any){
+
+    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
     
   }
+
+
 
   ngOnInit(): void {
     this.calService.eventGetFromApi().subscribe(data=>{
@@ -197,13 +212,14 @@ export class CalendarComponent implements OnInit {
 
         //display single events
 
-        let eventSingle = {title:data[i].eventTitle,start:data[i].start, end:data[i].end, description: data[i].description, recurring: data[i].recurring}
+        let eventSingle = {id: data[i]._id, title:data[i].eventTitle,start:data[i].start, end:data[i].end, description: data[i].description, recurring: data[i].recurring}
 
         events.push(eventSingle);
+        console.log(eventSingle.id);
 
         //display recurring
 
-        let eventRecurring = {title:data[i].eventTitle,startTime:{years:0,months:0,days:0,milliseconds:data[i].startTime},
+        let eventRecurring = {id: data[i]._id,title:data[i].eventTitle,startTime:{years:0,months:0,days:0,milliseconds:data[i].startTime},
         endTime:{years:0,months:0,days:0,milliseconds:data[i].endTime}, 
         startRecur: data[i].startRecur, endRecur: data[i].endRecur, daysOfWeek:data[i].daysOfWeek,
         description: data[i].description, recurring: data[i].recurring}
