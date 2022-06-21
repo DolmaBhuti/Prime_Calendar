@@ -13,7 +13,7 @@ export class EventCreateDialogComponent implements OnInit {
   constructor(public dialogRef:MatDialogRef<EventCreateDialogComponent>,@Inject(MAT_DIALOG_DATA) public data:EventFlexible, @Inject(MAT_DIALOG_DATA) public cal: CalendarComponent) { }
   ngOnInit(): void {
     this.data.start = "00:00";
-    this.data.end = "00:00";
+    this.data.end = "00:01";
   }
 
   onNoClick(): void {
