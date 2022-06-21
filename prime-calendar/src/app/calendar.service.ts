@@ -47,4 +47,9 @@ export class CalendarService {
       return this.http.delete<any>(`${environment.userAPIBase}/events/${id}`)
     }
 
+    eventGetById(id:any):Observable<any>{
+      console.log("get event from server: "+id)
+      console.log(`API url: ${environment.userAPIBase}/events/${id}`)
+      return this.http.get<any>(`${environment.userAPIBase}/events/${id}`)  
+    }
 }

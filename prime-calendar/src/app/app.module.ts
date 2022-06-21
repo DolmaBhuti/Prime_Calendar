@@ -30,12 +30,15 @@ import { FullCalendarModule } from '@fullcalendar/angular'; // must go before pl
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
 
+import { CKEditorModule } from 'ckeditor4-angular';
+
 import { AboutComponent } from './about/about.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { EventCreateDialogComponent } from './event-create-dialog/event-create-dialog.component';
 import { DisplayEventDetailsComponent } from './display-event-details/display-event-details.component';
 import { EditEventDetailsComponent } from './edit-event-details/edit-event-details.component';
+import { AddNoteComponent } from './add-note/add-note.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -51,7 +54,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     CalendarComponent,
     EventCreateDialogComponent,
     DisplayEventDetailsComponent,
-    EditEventDetailsComponent
+    EditEventDetailsComponent,
+    AddNoteComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +79,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatDialogModule,
     MatOptionModule,
     MatSelectModule,
-    FullCalendarModule // register FullCalendar with you app
+    FullCalendarModule, // register FullCalendar with you app
+    CKEditorModule
   ],
   providers: [
     {

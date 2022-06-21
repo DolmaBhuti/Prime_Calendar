@@ -25,4 +25,7 @@
 <div>
   <button id="delete" mat-button (click)="deleteBtn()">Delete Event</button>
 </div>
+<div>
+  <button id="delete" mat-button (click)="onNoClick()" routerLink="/note/{{data.event.id}}">Go to Note</button>
+</div>
 </div>
