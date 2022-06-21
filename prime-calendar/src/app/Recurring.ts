@@ -37,6 +37,6 @@ export interface EventFlexible {
     description: String;
     daysOfWeek?: [Number];
     startRecur?: Date;
-    endRecur?: String;
+    endRecur?: Date;
     recurring: String;
 }

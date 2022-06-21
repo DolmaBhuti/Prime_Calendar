@@ -82,6 +82,7 @@ export class EditEventDetailsComponent implements OnInit {
             //description: "daily test description",
             // startRecur: this.editableEvent.startRecur,  // insufficient logic here
             startRecur: new Date(dateStr[0].toString() + "T" + this.editableEvent.start),
+            endRecur: new Date(new Date(dateStr[0].toString() + "T00:00").getTime() + this.data.event._def.recurringDef?.typeData.endRecur.getTime() - this.data.event._def.recurringDef?.typeData.startRecur.getTime()),
             // endRecur : this.editableEvent.endRecur, // insufficient logic here **** need to find current range of dates and
             // apply to new startRecur
             //daysOfWeek: undefined,
@@ -99,8 +100,10 @@ export class EditEventDetailsComponent implements OnInit {
             endTime: new Date(dateStr[0].toString() + "T" + this.editableEvent.end).getTime() - new Date(dateStr[0]+"T00:00").getTime(),
             
             description: this.editableEvent.description,
-            startRecur: this.editableEvent.startRecur,
-            endRecur : this.editableEvent.endRecur,
+            // startRecur: this.editableEvent.startRecur,
+            // endRecur : this.editableEvent.endRecur,
+            startRecur: new Date(dateStr[0].toString() + "T" + this.editableEvent.start),
+            endRecur: new Date(new Date(dateStr[0].toString() + "T00:00").getTime() + this.data.event._def.recurringDef?.typeData.endRecur.getTime() - this.data.event._def.recurringDef?.typeData.startRecur.getTime()),
             daysOfWeek: this.editableEvent.daysOfWeek,
             recurring: this.editableEvent.recurring,
           }
