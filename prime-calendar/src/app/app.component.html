@@ -1,13 +1,17 @@
 
 <mat-toolbar class="navbar" color="primary">
 
-  <a class="navbar-brand" matTooltip="Home">
+  <a class="navbar-brand" matTooltip="Home" routerLink="/calendar"> 
     <h1>
       Prime Calendar
     </h1>
   </a>
 
-  <span class="navbar-spacer"></span>
+  <span class="linkContain">
+    <a class="navLinks" matTooltip="Home" routerLink="/calendar" > My Schedule</a>
+    <a class="navLinks" matTooltip="Home" > My Notes</a>
+
+  </span>
 
   <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="token">
     <mat-icon>person</mat-icon>
@@ -15,6 +19,7 @@
       {{token.userName}}
     </span>
   </button>
+  
   <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
     <a mat-menu-item (click)="logout()">
