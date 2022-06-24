@@ -19,6 +19,9 @@ import { EventCreateDialogComponent } from '../event-create-dialog/event-create-
 import { DisplayEventDetailsComponent } from '../display-event-details/display-event-details.component';
 import { ConditionalExpr } from '@angular/compiler';
 
+//Note
+import { NotesService } from '../notes.service';
+
 
 @Component({
   selector: 'app-calendar',
@@ -28,7 +31,7 @@ import { ConditionalExpr } from '@angular/compiler';
 export class CalendarComponent implements OnInit {
   eventTest:EventFlexible = { eventTitle:"", description:"", recurring:""}; // <---------
   
-  constructor(private calService : CalendarService,public dialog:MatDialog) { }
+  constructor(private calService : CalendarService,public dialog:MatDialog, public noteService: NotesService) { }
   private calendarSub: Subscription | undefined;
 
   //Open event dialog
@@ -189,10 +192,10 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+
   handleEventClick(info: any){
 
-    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
-    
+    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data: info});
   }
 
   handleEventDrop(info: any){

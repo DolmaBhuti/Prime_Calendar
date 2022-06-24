@@ -25,4 +25,10 @@ export class NotesService {
     console.log(`URL: ${environment.userAPIBase}/events/${eventId}/notes/${noteId}`)
     return this.http.put<any>(`${environment.userAPIBase}/events/${eventId}/notes/${noteId}`, note);
   }
+
+  deleteNote(eventId: any, noteId:any): Observable<any>{
+
+    return this.http.delete<any>(`${environment.userAPIBase}/events/${eventId}/notes/${noteId}`);
+    
+  }
 }
