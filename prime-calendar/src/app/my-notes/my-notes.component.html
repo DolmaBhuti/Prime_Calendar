@@ -1,0 +1,19 @@
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">Event title</th>
+        <th scope="col">note</th>
+      </tr>
+    </thead>
+
+
+         <tr *ngFor="let a of eventssaved;">
+           <td>{{a.id}}</td>
+           <td>{{a.title}}</td>
+           <td>{{a.note}}</td>
+         </tr>
+
+
+   </table>

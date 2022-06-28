@@ -1,7 +1,12 @@
 <h1>{{model.noteTitle}}</h1>
-<ckeditor [(ngModel)]="model.noteText"></ckeditor>
+<ckeditor 
+[config]="{ extraPlugins: 'exportpdf' }"
+[(ngModel)]="model.noteText"
+></ckeditor>
 <div>
     <button (click)="saveNote()">Save</button>
 </div>
 
-
+<script>
+    CKEDITOR.plugins.addExternal( 'exportpdf', './node_modules/ckeditor4-plugin-exportpdf/', 'https://cdn.ckeditor.com/4.15.0/full/ckeditor.js' );
+</script>
