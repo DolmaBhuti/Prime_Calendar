@@ -3,6 +3,8 @@ import { NotesService } from '../notes.service';
 import { CalendarService } from '../calendar.service';
 import { Note } from '../Note'
 import { NoteDisplay } from '../NoteDisplay'
+import { jsPDF } from "jspdf";
+
 @Component({
   selector: 'app-my-notes',
   templateUrl: './my-notes.component.html',
@@ -25,12 +27,7 @@ export class MyNotesComponent implements OnInit {
   //         department: String
   //       }
   ngOnInit(): void {
-
-
     this.calService.eventGetFromApi().subscribe(data=>{
-
-
-
       for(let i=0;i<data.length;i++){
 
         this.noteService.getNote(data[i]._id).subscribe(noteData=>{
@@ -49,26 +46,72 @@ export class MyNotesComponent implements OnInit {
             env.id = data[i]._id;
             env.title = data[i].eventTitle;
             env.note = noteData[0].noteTitle;
+
+            env.lastEdited = new Date(noteData[0].lastEditedDate).toLocaleString();
+            env.contentText = noteData[0].noteText;
             this.eventssaved.push(env);
-
-            console.log("data: "+noteData[0].noteTitle + noteData[0].noteText )
-
           }
-
-
         });
-        
-
       console.log(this.eventssaved);
       }
-
     })
-    
+}
+
+delNote(id: string): void {
+  this.noteService.getNote(id).subscribe(noteData=>{
+    if(noteData != ""){
+      this.noteService.deleteNote(id,noteData[0]._id).subscribe(sucess=>{
+        window.location.reload();
+        console.log("note id: " + noteData[0]._id);
+      });
+    }
+  })
+  
+}
+downloadPDF(content:NoteDisplay){
+
+  let pdf = new jsPDF();
+
+  // const reg = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
+
+  // content.contentText = content.contentText.replace(reg, "");
+  pdf.setFont("normal");
+  pdf.setFontSize(24);
+  pdf.text(content.title , 95, 18);
+  pdf.setFontSize(16);
+  pdf.text("Last edited on: " + content.lastEdited , 15, 30);
+
+  var splitTitle = pdf.splitTextToSize(this.stripHtmlToText(content.contentText), 270);
+  pdf.setFontSize(11);
+  var y = 40;
+  for (var i = 0; i < splitTitle.length; i++) {                
+      if (y > 280) {
+          y = 10;
+          pdf.addPage();
+      }
+      pdf.text( splitTitle[i], 15, y);
+      y = y + 7;
+  }
+
+
+  pdf.save(content.title);
+
+}
+
+
+
+  stripHtmlToText(html: any)
+{
+    var tmp = document.createElement("DIV");
+    tmp.innerHTML = html;
+    var res = tmp.textContent || tmp.innerText || '';
+    res.replace('\u200B', ''); // zero width space
+    res = res.trim();
+    return res;
+}
+  }
+
   
 
 
-
-
-}
-  }
 

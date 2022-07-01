@@ -2,17 +2,29 @@
 <table class="table table-striped">
     <thead>
       <tr>
-        <th scope="col">id</th>
-        <th scope="col">Event title</th>
-        <th scope="col">note</th>
+        <th scope="col">Event</th>
+        <th scope="col">Date</th>
+        <th scope="col">last Edited</th>
       </tr>
     </thead>
 
 
          <tr *ngFor="let a of eventssaved;">
-           <td>{{a.id}}</td>
            <td>{{a.title}}</td>
            <td>{{a.note}}</td>
+           <td>{{a.lastEdited}}</td>
+           <div *ngIf="a.note == 'no note found'; else elseBlock" >
+            <button id="note" mat-button  routerLink="/note/{{a.id}}">Add to Note</button>
+          </div>
+        
+          <ng-template #elseBlock>
+            <button id="note" mat-button  routerLink="/note/{{a.id}}">Edit Note</button>
+            <button id="delete" mat-button (click)="delNote(a.id)">Delete Note</button>
+            <button mat-button (click)="downloadPDF(a)">Export</button>
+
+
+          </ng-template>
+
          </tr>
 
 
