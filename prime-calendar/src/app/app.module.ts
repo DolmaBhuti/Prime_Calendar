@@ -22,9 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 //full calendar plug ins
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -41,12 +41,14 @@ import { EditEventDetailsComponent } from './edit-event-details/edit-event-detai
 import { AddNoteComponent } from './add-note/add-note.component';
 import { MyNotesComponent } from './my-notes/my-notes.component';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+//timer
+import { CdTimerModule } from 'angular-cd-timer';
+
+FullCalendarModule.registerPlugins([
+  // register FullCalendar plugins
   dayGridPlugin,
-  interactionPlugin
+  interactionPlugin,
 ]);
-
-
 
 @NgModule({
   declarations: [
@@ -60,7 +62,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DisplayEventDetailsComponent,
     EditEventDetailsComponent,
     AddNoteComponent,
-    MyNotesComponent
+    MyNotesComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,15 +87,16 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatOptionModule,
     MatSelectModule,
     FullCalendarModule, // register FullCalendar with you app
-    CKEditorModule
+    CKEditorModule,
+    CdTimerModule,
   ],
   providers: [
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptTokenService,
-    multi: true
-    }
-],
-  bootstrap: [AppComponent]
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptTokenService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

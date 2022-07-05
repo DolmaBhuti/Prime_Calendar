@@ -1,12 +1,32 @@
-<h1>{{model.noteTitle}}</h1>
-<ckeditor 
-[config]="{ extraPlugins: 'exportpdf' }"
-[(ngModel)]="model.noteText"
+<script>
+  CKEDITOR.plugins.addExternal(
+    "exportpdf",
+    "./node_modules/ckeditor4-plugin-exportpdf/",
+    "https://cdn.ckeditor.com/4.15.0/full/ckeditor.js"
+  );
+</script>
+<h1>{{ model.noteTitle }}</h1>
+<ckeditor
+  [config]="{ extraPlugins: 'exportpdf' }"
+  [(ngModel)]="model.noteText"
 ></ckeditor>
 <div>
-    <button (click)="saveNote()">Save</button>
+  <button (click)="saveNote()">Save</button>
 </div>
 
-<script>
-    CKEDITOR.plugins.addExternal( 'exportpdf', './node_modules/ckeditor4-plugin-exportpdf/', 'https://cdn.ckeditor.com/4.15.0/full/ckeditor.js' );
-</script>
+<div class="timerForm">
+  <form action="">
+    <input matInput id="hours" name="hours" type="time" />
+    <label for="hours">HR</label><br />
+    <!-- <input matInput id="mins" name="mins" type="time" />
+    <label for="mins">MIN</label><br /> -->
+    <button>Create</button>
+    <button>Cancel</button>
+  </form>
+</div>
+<div class="userTimer">
+  <h1>{{ model.noteTitle }}</h1>
+  <cd-timer format="hms"></cd-timer> <br />
+  <button>Create</button>
+  <button>Cancel</button>
+</div>
