@@ -5,28 +5,47 @@
     "https://cdn.ckeditor.com/4.15.0/full/ckeditor.js"
   );
 </script>
-<h1>{{ model.noteTitle }}</h1>
-<ckeditor
-  [config]="{ extraPlugins: 'exportpdf' }"
+<body>
+<div class="note">
+<div class="title">
+  <h1>{{ model.noteTitle }}</h1>
+  <button mat-raised-button color="primary" class="saveBtn" (click)="saveNote()">Save</button>
+</div>
+<div class="editor">
+  <ckeditor
+  [config]="{ extraPlugins: 'exportpdf',height:800 }"
   [(ngModel)]="model.noteText"
 ></ckeditor>
-<div>
-  <button (click)="saveNote()">Save</button>
+</div>
 </div>
 
-<div class="timerForm">
-  <form action="">
-    <input matInput id="hours" name="hours" type="time" />
-    <label for="hours">HR</label><br />
-    <!-- <input matInput id="mins" name="mins" type="time" />
-    <label for="mins">MIN</label><br /> -->
-    <button>Create</button>
-    <button>Cancel</button>
-  </form>
-</div>
+<div class="timer">
+  <button mat-raised-button color="primary" (click)="showTimerForm()">Add new timer</button>
+  <br />
+
+  <p>Grey - break</p>
+  <p>Green, yellow, red - work</p><br />
+
+  <section class="addTimer" *ngIf="isShow">
+    <label>Work session</label><br />
+    <input matInput id="workSessionHr" name="workSessionHr" type="number" [(ngModel)]="newWorkHr"/> Hr 
+    <input matInput id="workSessionMin" name="workSessionMin" type="number" [(ngModel)]="newWorkMin"/> Min 
+
+    <br />
+    <input type="checkbox" [(ngModel)]="break" /> Break session <br />
+    <input matInput id="breakSessionHr" name="breakSessionHr" type="number" [disabled]="!break" [(ngModel)]="newBreakHr"/> Hr 
+    <input matInput id="breakSessionMin" name="breakSessionMin" type="number" [disabled]="!break" [(ngModel)]="newBreakMin"/> Min 
+
+    <br />
+    <button mat-stroked-button color="primary" (click)="addTimer()" >Create</button>
+    <button mat-stroked-button >Cancel</button>
+  </section>
+
+
+
 <div class="userTimer">
-  <h1>{{ model.noteTitle }}</h1>
   <cd-timer format="hms"></cd-timer> <br />
-  <button>Create</button>
-  <button>Cancel</button>
 </div>
+
+</div>
+</body>

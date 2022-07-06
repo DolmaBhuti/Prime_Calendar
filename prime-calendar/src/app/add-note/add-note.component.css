@@ -1,0 +1,48 @@
+
+.title h1{
+    float: left;
+}
+.title button{
+    float: right;
+}
+
+.editor{
+    margin-top: 50px;
+    height: 100%;
+}
+.note{
+    float: left;
+    width: 70%;
+    height: 100%;
+    margin: 10px;
+}
+
+.timer{
+    margin: 10px;
+}
+
+.timer button{
+    margin-bottom: 10px;
+}
+
+#workSessionHr{
+    width: 50px;
+}
+
+#workSessionMin{
+    width: 50px;
+}
+
+#breakSessionHr{
+    width: 50px;
+}
+
+#breakSessionMin{
+    width: 50px;
+}
+
+.addTimer button{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
