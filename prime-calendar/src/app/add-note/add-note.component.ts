@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotesService } from '../notes.service';
 import { CalendarService } from '../calendar.service';
 import { TimersService } from '../timers.service';
 import { Note } from '../Note';
 import { Timer } from '../Timer';
+import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 
 @Component({
   selector: 'app-add-note',
   templateUrl: './add-note.component.html',
   styleUrls: ['./add-note.component.css']
 })
-export class AddNoteComponent implements OnInit {
+export class AddNoteComponent implements OnInit, OnDestroy{
 
   public model = new Note();
   isShow:boolean=false;
@@ -21,13 +22,22 @@ export class AddNoteComponent implements OnInit {
   newBreakHr:number=0;
   newBreakMin:number=0;
   timerNumber:number = 1;
+  durationInSeconds: number = 0;
+
+  loaded: boolean = false;
+  secondsToDisplay: [number] = [0];
+  timers!: [any] ; 
+
+  mysubscription: any; 
 
   constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService) { }
 
   ngOnInit(): void {
+    this.loaded = false;
     this.route.params.subscribe(params => {
       this.model.eventId = params['id']
       this.noteService.getNote(params['id']).subscribe(noteData=>{
+          //console.log("On init noteData: "+ noteData[0].noteText);
         if(noteData == ""){
           console.log("add new noteData")
           this.calService.eventGetById(this.model.eventId).subscribe(event=>{
@@ -45,9 +55,40 @@ export class AddNoteComponent implements OnInit {
         }
       })
     })
+    this.displayTimer();
+    this.loaded = true;
   }
 
+  ngOnDestroy(): void {
+  }
+
+  // ngOnChanges():void{
+  //   this.route.params.subscribe(params => {
+  //     this.model.eventId = params['id']
+  //     this.noteService.getNote(params['id']).subscribe(noteData=>{
+  //       console.log("noteData: "+ noteData[0].noteText);
+  //       if(noteData == ""){
+  //         console.log("add new noteData")
+  //         this.calService.eventGetById(this.model.eventId).subscribe(event=>{
+  //           let date = new Date()
+  //           let dateString = date.toDateString()
+  //           this.model.noteTitle =event[0].eventTitle;
+  //           this.model.lastEditedDate = date;
+  //           console.log("Note title: "+this.model.noteTitle)
+  //           console.log("lastEditDate: "+this.model.lastEditedDate)
+  //           console.log("noteText: "+this.model.noteText)
+  //           console.log("eventId: "+this.model.eventId)})
+  //       }else{
+  //         console.log("data: "+noteData[0].noteTitle)
+  //         this.model = noteData[0]
+  //       }
+  //     })
+  //   })
+  //   this.displayTimer();
+  // }
+
   saveNote():void{
+    console.log("save note works");
     this.noteService.getNote(this.model.eventId).subscribe(noteData=>{
       if(noteData == ""){
         console.log("save as new")
@@ -68,6 +109,8 @@ export class AddNoteComponent implements OnInit {
   }
 
   addTimer():void{
+
+    console.log("add timer works");
     let newTimer = new Timer();
     newTimer.timerTitle = this.model.noteTitle+" Timer "+this.timerNumber;
     this.timerNumber++;
@@ -82,9 +125,14 @@ export class AddNoteComponent implements OnInit {
     }
 
     console.log("New timer: ");
-    console.log(newTimer)
+    console.log(newTimer);
 
-    this.timerService.addTimer(newTimer).subscribe(success=>{});
+    this.timerService.addTimer(newTimer).subscribe(success=>{
+      // this.ngOnChanges();
+      this.ngOnInit();
+      //window.location.reload();
+    });
+    //this.ngOnInit();
 
     //reset:
     this.newWorkHr = 0;
@@ -93,5 +141,17 @@ export class AddNoteComponent implements OnInit {
     this.newBreakMin = 0;
     this.break=false;
     this.isShow = false;
+  }
+
+  displayTimer():void{
+    let index: number = 0;
+    this.timerService.getTimer(this.model.eventId).subscribe(timerData=>{
+      this.timers = timerData;
+      for(index = 0; index < timerData.length; index++){
+        this.secondsToDisplay.push(timerData[index].timerDuration * 60);
+        // console.log(this.secondsToDisplay[index]);
+        // console.log("id: " + this.model.eventId);
+     }
+    });
   }
 }

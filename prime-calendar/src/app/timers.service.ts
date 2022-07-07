@@ -15,4 +15,9 @@ export class TimersService {
     console.log(`URL: ${environment.userAPIBase}/events/${timer.eventId}/timers/add`)
     return this.http.post<any>(`${environment.userAPIBase}/events/${timer.eventId}/timers/add`, timer);
   }
+
+  getTimer(id:any): Observable<any>{
+    return this.http.get<any>(`${environment.userAPIBase}/events/${id}/timers`);
+  }
+
 }

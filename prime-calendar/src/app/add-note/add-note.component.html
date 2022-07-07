@@ -11,7 +11,7 @@
   <h1>{{ model.noteTitle }}</h1>
   <button mat-raised-button color="primary" class="saveBtn" (click)="saveNote()">Save</button>
 </div>
-<div class="editor">
+<div class="editor" *ngIf = "loaded">
   <ckeditor
   [config]="{ extraPlugins: 'exportpdf',height:800 }"
   [(ngModel)]="model.noteText"
@@ -20,7 +20,7 @@
 </div>
 
 <div class="timer">
-  <button mat-raised-button color="primary" (click)="showTimerForm()">Add new timer</button>
+  <button mat-raised-button color="primary" (click)="showTimerForm(); saveNote()">Add new timer</button>
   <br />
 
   <p>Grey - break</p>
@@ -37,14 +37,15 @@
     <input matInput id="breakSessionMin" name="breakSessionMin" type="number" [disabled]="!break" [(ngModel)]="newBreakMin"/> Min 
 
     <br />
-    <button mat-stroked-button color="primary" (click)="addTimer()" >Create</button>
+    <button mat-stroked-button color="primary"  (click)="addTimer(); saveNote()">Create</button>
     <button mat-stroked-button >Cancel</button>
   </section>
 
 
 
-<div class="userTimer">
-  <cd-timer format="hms"></cd-timer> <br />
+<div class="userTimer" *ngFor = "let singleTimer of timers">
+  <h1>{{singleTimer.timerTitle}}</h1>
+  <cd-timer [countdown]="true" [startTime]="100"></cd-timer>
 </div>
 
 </div>
