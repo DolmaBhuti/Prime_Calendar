@@ -27,6 +27,9 @@
   <p>Green, yellow, red - work</p><br />
 
   <section class="addTimer" *ngIf="isShow">
+    <label>Timer Title</label><br />
+    <input id="timerTitle" name="timerTitle" type="string" [(ngModel)]="newTimerTitle"/>
+    <br />
     <label>Work session</label><br />
     <input matInput id="workSessionHr" name="workSessionHr" type="number" [(ngModel)]="newWorkHr"/> Hr 
     <input matInput id="workSessionMin" name="workSessionMin" type="number" [(ngModel)]="newWorkMin"/> Min 
@@ -38,14 +41,15 @@
 
     <br />
     <button mat-stroked-button color="primary"  (click)="addTimer(); saveNote()">Create</button>
-    <button mat-stroked-button >Cancel</button>
+    <button mat-stroked-button (click)="closeTimerForm()">Cancel</button>
   </section>
 
 
 
 <div class="userTimer" *ngFor = "let singleTimer of timers">
   <h1>{{singleTimer.timerTitle}}</h1>
-  <cd-timer [countdown]="true" [startTime]="100"></cd-timer>
+  <cd-timer #timeDisplay class="bootstrap-timer"  [countdown]="true"  [startTime]=singleTimer.timerDuration*60 >[hours]h [minutes]m [seconds]s
+  </cd-timer>
 </div>
 
 </div>

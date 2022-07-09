@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotesService } from '../notes.service';
 import { CalendarService } from '../calendar.service';
@@ -6,17 +6,22 @@ import { TimersService } from '../timers.service';
 import { Note } from '../Note';
 import { Timer } from '../Timer';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
+import {CdTimerComponent, TimeInterface} from 'angular-cd-timer';
 
 @Component({
   selector: 'app-add-note',
   templateUrl: './add-note.component.html',
   styleUrls: ['./add-note.component.css']
 })
-export class AddNoteComponent implements OnInit, OnDestroy{
+export class AddNoteComponent implements OnInit, AfterViewInit{
+  // basicTimer: CdTimerComponent = {} as CdTimerComponent;
+  @ViewChild('basicTimer') basicTimer: CdTimerComponent = {} as CdTimerComponent;
+  // @ViewChild('timeDisplay') timeDisplay: CdTimerComponent;
 
   public model = new Note();
   isShow:boolean=false;
   break:boolean=false;
+  newTimerTitle: String = "";
   newWorkHr:number=0;
   newWorkMin:number=0;
   newBreakHr:number=0;
@@ -26,11 +31,10 @@ export class AddNoteComponent implements OnInit, OnDestroy{
 
   loaded: boolean = false;
   secondsToDisplay: [number] = [0];
-  timers!: [any] ; 
-
+  timers!: [any]; 
   mysubscription: any; 
 
-  constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService) { }
+  constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService) {}
 
   ngOnInit(): void {
     this.loaded = false;
@@ -48,7 +52,8 @@ export class AddNoteComponent implements OnInit, OnDestroy{
             console.log("Note title: "+this.model.noteTitle)
             console.log("lastEditDate: "+this.model.lastEditedDate)
             console.log("noteText: "+this.model.noteText)
-            console.log("eventId: "+this.model.eventId)})
+            console.log("eventId: "+this.model.eventId)
+          })
         }else{
           console.log("data: "+noteData[0].noteTitle)
           this.model = noteData[0]
@@ -59,7 +64,13 @@ export class AddNoteComponent implements OnInit, OnDestroy{
     this.loaded = true;
   }
 
-  ngOnDestroy(): void {
+  ngAfterViewInit(): void {
+    //@ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
+    // @ViewChild('timeDisplay') timeDisplay: CdTimerComponent;
+    // this.basicTimer.autoStart = false;
+    //this.displayTimer();
+    //this.timeDisplay.stop();
+
   }
 
   // ngOnChanges():void{
@@ -107,12 +118,14 @@ export class AddNoteComponent implements OnInit, OnDestroy{
   showTimerForm():void{
     this.isShow=true;
   }
+  closeTimerForm():void{
+    this.isShow = false;
+  }
 
   addTimer():void{
-
     console.log("add timer works");
     let newTimer = new Timer();
-    newTimer.timerTitle = this.model.noteTitle+" Timer "+this.timerNumber;
+    newTimer.timerTitle = this.model.noteTitle+ " " + this.newTimerTitle;
     this.timerNumber++;
     newTimer.eventId = this.model.eventId;
     let wrkHrInMin = this.newWorkHr * 60;
@@ -135,6 +148,7 @@ export class AddNoteComponent implements OnInit, OnDestroy{
     //this.ngOnInit();
 
     //reset:
+    this.newTimerTitle = "";
     this.newWorkHr = 0;
     this.newWorkMin = 0;
     this.newBreakHr = 0;
@@ -144,6 +158,7 @@ export class AddNoteComponent implements OnInit, OnDestroy{
   }
 
   displayTimer():void{
+    //console.log(this.basicTimer.autoStart)
     let index: number = 0;
     this.timerService.getTimer(this.model.eventId).subscribe(timerData=>{
       this.timers = timerData;
@@ -151,7 +166,7 @@ export class AddNoteComponent implements OnInit, OnDestroy{
         this.secondsToDisplay.push(timerData[index].timerDuration * 60);
         // console.log(this.secondsToDisplay[index]);
         // console.log("id: " + this.model.eventId);
-     }
+      }
     });
   }
 }

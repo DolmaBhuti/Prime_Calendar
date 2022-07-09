@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { Event, NavigationStart, Router } from '@angular/router';
 import { AuthService } from './auth.service';
 

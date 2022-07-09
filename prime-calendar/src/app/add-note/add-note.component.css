@@ -50,7 +50,17 @@
 
 
 
-
+.bootstrap-timer {
+    color: #303030;
+    background-color: #eeeeee;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #c9c9c9;
+    border-radius: 8px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 
 /* body{
 	text-align: center;
