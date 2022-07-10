@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList, Query} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotesService } from '../notes.service';
 import { CalendarService } from '../calendar.service';
@@ -7,6 +7,7 @@ import { Note } from '../Note';
 import { Timer } from '../Timer';
 import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 import {CdTimerComponent, TimeInterface} from 'angular-cd-timer';
+import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-add-note',
@@ -14,9 +15,7 @@ import {CdTimerComponent, TimeInterface} from 'angular-cd-timer';
   styleUrls: ['./add-note.component.css']
 })
 export class AddNoteComponent implements OnInit, AfterViewInit{
-  // basicTimer: CdTimerComponent = {} as CdTimerComponent;
-  @ViewChild('basicTimer') basicTimer: CdTimerComponent = {} as CdTimerComponent;
-  // @ViewChild('timeDisplay') timeDisplay: CdTimerComponent;
+  @ViewChildren('basicTimer') basicTimer: QueryList<CdTimerComponent> = {} as QueryList<CdTimerComponent>;
 
   public model = new Note();
   isShow:boolean=false;
@@ -65,12 +64,21 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    //@ViewChild('basicTimer', { static: true }) basicTimer: CdTimerComponent;
-    // @ViewChild('timeDisplay') timeDisplay: CdTimerComponent;
-    // this.basicTimer.autoStart = false;
-    //this.displayTimer();
-    //this.timeDisplay.stop();
+    this.basicTimer.changes.subscribe(() => {
+      this.basicTimer.forEach(element => {
+        element.stop();
+      });
+    });
+  }
 
+  resumeTimer(index:number):void {
+    console.log(typeof this.basicTimer.find((elem, i) => i == index));
+    this.basicTimer.find((elem, i) => i == index)?.resume();
+  }
+
+  stopTimer(index:number):void {
+    console.log(this.basicTimer.find((elem, i) => i == index));
+    this.basicTimer.find((elem, i) => i == index)?.stop();
   }
 
   // ngOnChanges():void{
