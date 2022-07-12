@@ -46,10 +46,14 @@
 
 
 
-<div class="userTimer" *ngFor = "let singleTimer of timers">
+<div class="userTimer" *ngFor = "let singleTimer of timers; let i = index">
   <h1>{{singleTimer.timerTitle}}</h1>
-  <cd-timer #timeDisplay class="bootstrap-timer"  [countdown]="true"  [startTime]=singleTimer.timerDuration*60 >[hours]h [minutes]m [seconds]s
+  <cd-timer #basicTimer class="bootstrap-timer"  [countdown]="true" [startTime]=singleTimer.timerDuration*60 >[hours]h [minutes]m [seconds]s
   </cd-timer>
+  <div>
+    <button mat-stroked-button (click)="resumeTimer(i)">Start</button>
+    <button mat-stroked-button (click)="stopTimer(i)">Stop</button>
+  </div>
 </div>
 
 </div>
