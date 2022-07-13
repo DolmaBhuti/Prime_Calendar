@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList, Query} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ViewChildren, ElementRef, QueryList, Query, Output} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NotesService } from '../notes.service';
 import { CalendarService } from '../calendar.service';
@@ -133,7 +133,7 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
   addTimer():void{
     console.log("add timer works");
     let newTimer = new Timer();
-    newTimer.timerTitle = this.model.noteTitle+ " " + this.newTimerTitle;
+    newTimer.timerTitle = this.newTimerTitle;
     this.timerNumber++;
     newTimer.eventId = this.model.eventId;
     let wrkHrInMin = this.newWorkHr * 60;

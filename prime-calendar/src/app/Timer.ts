@@ -1,5 +1,5 @@
 export class Timer {
-    timerTitle: string = "";
+    timerTitle: String = "";
     timerDuration: Number = 0;
     breaks: Boolean = false;
     breakDuration: Number = 0;
