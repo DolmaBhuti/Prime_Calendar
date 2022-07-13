@@ -1,3 +1,17 @@
 h1{
     color: white;
 }
+
+a { text-decoration: none; 
+    color: white}
+
+
+.navLinks{
+    padding-left: 20px ;
+}
+
+.linkContain{
+    margin-left: 70%;
+}
+.navbar{
+}

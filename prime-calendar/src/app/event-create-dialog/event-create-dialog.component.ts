@@ -14,6 +14,7 @@ export class EventCreateDialogComponent implements OnInit {
   ngOnInit(): void {
     this.data.start = "00:00";
     this.data.end = "00:01";
+    this.data.recurring = "none";
   }
 
   onNoClick(): void {
