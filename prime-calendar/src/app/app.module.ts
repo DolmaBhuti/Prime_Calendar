@@ -43,6 +43,7 @@ import { MyNotesComponent } from './my-notes/my-notes.component';
 
 //timer
 import { CdTimerModule } from 'angular-cd-timer';
+import { NotifierModule } from 'angular-notifier';
 
 FullCalendarModule.registerPlugins([
   // register FullCalendar plugins
@@ -89,6 +90,26 @@ FullCalendarModule.registerPlugins([
     FullCalendarModule, // register FullCalendar with you app
     CKEditorModule,
     CdTimerModule,
+    NotifierModule.withConfig({
+      position: {
+
+        horizontal: {
+      
+          /**
+           * Defines the horizontal position on the screen
+           * @type {'left' | 'middle' | 'right'}
+           */
+          position: 'right',
+      
+          /**
+           * Defines the horizontal distance to the screen edge (in px)
+           * @type {number}
+           */
+          distance: 12
+      
+        }
+      }
+    }),
   ],
   providers: [
     {
