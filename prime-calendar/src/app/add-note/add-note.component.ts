@@ -165,6 +165,19 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
     this.isShow = false;
   }
 
+  
+  deleteTimer():void {
+    this.timerService.getTimer(this.model.eventId).subscribe(timerData=>{
+      if(timerData != ""){
+        this.timerService.deleteTimer(this.model.eventId,timerData[0]._id).subscribe(sucess=>{
+          window.location.reload();
+          console.log("timer id: " + timerData[0]._id);
+        });
+      }
+    })
+    
+  }
+
   displayTimer():void{
     //console.log(this.basicTimer.autoStart)
     let index: number = 0;

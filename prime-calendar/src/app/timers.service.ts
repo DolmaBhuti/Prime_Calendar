@@ -20,4 +20,9 @@ export class TimersService {
     return this.http.get<any>(`${environment.userAPIBase}/events/${id}/timers`);
   }
 
+  deleteTimer(eventId: any, timerId:any): Observable<any>{
+    return this.http.delete<any>(`${environment.userAPIBase}/events/${eventId}/timers/${timerId}`);
+    
+  }
+
 }
