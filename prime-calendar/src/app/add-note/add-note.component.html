@@ -44,6 +44,7 @@
   <div>
     <button mat-stroked-button color="primary" (click)="resumeTimer(i); showNotification( 'info', singleTimer.timerTitle+' is started!' )">Start</button>
     <button mat-stroked-button (click)="stopTimer(i); showNotification( 'info', singleTimer.timerTitle+' is stopped!')">Stop</button>
+    <button  mat-stroked-button (click)="deleteTimer()">Delete</button>
   </div>
 </div>
 
