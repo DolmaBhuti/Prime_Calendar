@@ -5,9 +5,9 @@ import { CalendarService } from '../calendar.service';
 import { TimersService } from '../timers.service';
 import { Note } from '../Note';
 import { Timer } from '../Timer';
-import { ThirdPartyDraggable } from '@fullcalendar/interaction';
 import {CdTimerComponent, TimeInterface} from 'angular-cd-timer';
-import { elementAt } from 'rxjs';
+import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-add-note',
@@ -17,7 +17,7 @@ import { elementAt } from 'rxjs';
 export class AddNoteComponent implements OnInit, AfterViewInit{
   @ViewChildren('basicTimer') basicTimer: QueryList<CdTimerComponent> = {} as QueryList<CdTimerComponent>;
 
-  public model = new Note();
+  public model:Note = new Note();
   isShow:boolean=false;
   break:boolean=false;
   newTimerTitle: String = "";
@@ -32,20 +32,24 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
   secondsToDisplay: [number] = [0];
   timers!: [any]; 
   mysubscription: any; 
+  private notifier!: NotifierService;
 
-  constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService) {}
+  constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService, notifierService:NotifierService) {this.notifier = notifierService;}
 
   ngOnInit(): void {
     this.loaded = false;
+    this.displayTimer();
+    this.loaded = true;
+  }
+
+  editorInit(event: CKEditor4.EventInfo):void{
     this.route.params.subscribe(params => {
       this.model.eventId = params['id']
       this.noteService.getNote(params['id']).subscribe(noteData=>{
-          //console.log("On init noteData: "+ noteData[0].noteText);
         if(noteData == ""){
           console.log("add new noteData")
           this.calService.eventGetById(this.model.eventId).subscribe(event=>{
             let date = new Date()
-            let dateString = date.toDateString()
             this.model.noteTitle =event[0].eventTitle;
             this.model.lastEditedDate = date;
             console.log("Note title: "+this.model.noteTitle)
@@ -55,12 +59,14 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
           })
         }else{
           console.log("data: "+noteData[0].noteTitle)
+
+          console.log("ori data: "+this.model.noteTitle)
           this.model = noteData[0]
+          event.editor.setData(this.model.noteText)
+          console.log("model data: "+this.model.noteTitle)
         }
       })
     })
-    this.displayTimer();
-    this.loaded = true;
   }
 
   ngAfterViewInit(): void {
@@ -80,31 +86,6 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
     console.log(this.basicTimer.find((elem, i) => i == index));
     this.basicTimer.find((elem, i) => i == index)?.stop();
   }
-
-  // ngOnChanges():void{
-  //   this.route.params.subscribe(params => {
-  //     this.model.eventId = params['id']
-  //     this.noteService.getNote(params['id']).subscribe(noteData=>{
-  //       console.log("noteData: "+ noteData[0].noteText);
-  //       if(noteData == ""){
-  //         console.log("add new noteData")
-  //         this.calService.eventGetById(this.model.eventId).subscribe(event=>{
-  //           let date = new Date()
-  //           let dateString = date.toDateString()
-  //           this.model.noteTitle =event[0].eventTitle;
-  //           this.model.lastEditedDate = date;
-  //           console.log("Note title: "+this.model.noteTitle)
-  //           console.log("lastEditDate: "+this.model.lastEditedDate)
-  //           console.log("noteText: "+this.model.noteText)
-  //           console.log("eventId: "+this.model.eventId)})
-  //       }else{
-  //         console.log("data: "+noteData[0].noteTitle)
-  //         this.model = noteData[0]
-  //       }
-  //     })
-  //   })
-  //   this.displayTimer();
-  // }
 
   saveNote():void{
     console.log("save note works");
@@ -139,33 +120,20 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
     let wrkHrInMin = this.newWorkHr * 60;
     newTimer.timerDuration = wrkHrInMin + this.newWorkMin;
 
-    if(this.break){
-      newTimer.breaks = true;
-      let brkHrInMin = this.newBreakHr * 60;
-      newTimer.breakDuration = brkHrInMin + this.newBreakMin;
-    }
-
     console.log("New timer: ");
     console.log(newTimer);
 
     this.timerService.addTimer(newTimer).subscribe(success=>{
-      // this.ngOnChanges();
       this.ngOnInit();
-      //window.location.reload();
     });
-    //this.ngOnInit();
 
     //reset:
     this.newTimerTitle = "";
     this.newWorkHr = 0;
     this.newWorkMin = 0;
-    this.newBreakHr = 0;
-    this.newBreakMin = 0;
-    this.break=false;
     this.isShow = false;
   }
 
-  
   deleteTimer():void {
     this.timerService.getTimer(this.model.eventId).subscribe(timerData=>{
       if(timerData != ""){
@@ -175,12 +143,14 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
         });
       }
     })
-    
   }
 
   displayTimer():void{
     //console.log(this.basicTimer.autoStart)
     let index: number = 0;
+    this.route.params.subscribe(params => {
+      this.model.eventId = params['id']
+    })
     this.timerService.getTimer(this.model.eventId).subscribe(timerData=>{
       this.timers = timerData;
       for(index = 0; index < timerData.length; index++){
@@ -190,4 +160,8 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
       }
     });
   }
+
+  public showNotification( type: string, message: string ): void {
+		this.notifier.notify( type, message );
+	}
 }

@@ -35,12 +35,8 @@
     width: 50px;
 }
 
-#breakSessionHr{
-    width: 50px;
-}
-
-#breakSessionMin{
-    width: 50px;
+#timerTitle{
+    width: 150px;
 }
 
 .addTimer button{

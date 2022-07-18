@@ -15,6 +15,7 @@
   <ckeditor
   [config]="{ extraPlugins: 'exportpdf',height:800 }"
   [(ngModel)]="model.noteText"
+  (ready)="editorInit($event)"
 ></ckeditor>
 </div>
 </div>
@@ -22,9 +23,6 @@
 <div class="timer">
   <button mat-raised-button color="primary" (click)="showTimerForm(); saveNote()">Add new timer</button>
   <br />
-
-  <!-- <p>Grey - break</p>
-  <p>Green, yellow, red - work</p><br /> -->
 
   <section class="addTimer" *ngIf="isShow">
     <label>Timer Title</label><br />
@@ -34,28 +32,23 @@
     <input matInput id="workSessionHr" name="workSessionHr" type="number" [(ngModel)]="newWorkHr"/> Hr 
     <input matInput id="workSessionMin" name="workSessionMin" type="number" [(ngModel)]="newWorkMin"/> Min 
 
-    <!-- <br />
-    <input type="checkbox" [(ngModel)]="break" /> Break session <br />
-    <input matInput id="breakSessionHr" name="breakSessionHr" type="number" [disabled]="!break" [(ngModel)]="newBreakHr"/> Hr 
-    <input matInput id="breakSessionMin" name="breakSessionMin" type="number" [disabled]="!break" [(ngModel)]="newBreakMin"/> Min  -->
-
     <br />
     <button mat-stroked-button color="primary"  (click)="addTimer(); saveNote()">Create</button>
     <button mat-stroked-button (click)="closeTimerForm()">Cancel</button>
   </section>
 
-
-
 <div class="userTimer" *ngFor = "let singleTimer of timers; let i = index">
   <h1>{{singleTimer.timerTitle}}</h1>
-  <cd-timer #basicTimer class="bootstrap-timer"  [countdown]="true" [startTime]=singleTimer.timerDuration*60 >[hours]h [minutes]m [seconds]s
+  <cd-timer #basicTimer class="bootstrap-timer"  [countdown]="true" [startTime]=singleTimer.timerDuration*60 (onComplete)="showNotification( 'default', singleTimer.timerTitle+' is over!' )">[hours]h [minutes]m [seconds]s
   </cd-timer>
   <div>
-    <button mat-stroked-button color="primary" (click)="resumeTimer(i)">Start</button>
-    <button mat-stroked-button (click)="stopTimer(i)">Stop</button>
+    <button mat-stroked-button color="primary" (click)="resumeTimer(i); showNotification( 'info', singleTimer.timerTitle+' is started!' )">Start</button>
+    <button mat-stroked-button (click)="stopTimer(i); showNotification( 'info', singleTimer.timerTitle+' is stopped!')">Stop</button>
     <button  mat-stroked-button (click)="deleteTimer()">Delete</button>
   </div>
 </div>
 
 </div>
 </body>
+
+<notifier-container></notifier-container>
