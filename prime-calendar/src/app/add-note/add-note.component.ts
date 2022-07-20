@@ -8,6 +8,7 @@ import { Timer } from '../Timer';
 import {CdTimerComponent, TimeInterface} from 'angular-cd-timer';
 import { CKEditor4 } from 'ckeditor4-angular/ckeditor';
 import { NotifierService } from 'angular-notifier';
+import { EventFlexible } from '../Recurring';
 
 @Component({
   selector: 'app-add-note',
@@ -28,11 +29,17 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
   timerNumber:number = 1;
   durationInSeconds: number = 0;
 
+  eventDetails:EventFlexible = { eventTitle:"", description:"", recurring:""};
+
   loaded: boolean = false;
   secondsToDisplay: [number] = [0];
   timers!: [any]; 
   mysubscription: any; 
   private notifier!: NotifierService;
+
+  tempStart: number = 0;
+  tempEnd: number = 0;
+
 
   constructor(private route:ActivatedRoute,private noteService:NotesService,private calService : CalendarService, private timerService : TimersService, notifierService:NotifierService) {this.notifier = notifierService;}
 
@@ -40,6 +47,25 @@ export class AddNoteComponent implements OnInit, AfterViewInit{
     this.loaded = false;
     this.displayTimer();
     this.loaded = true;
+
+
+    this.route.params.subscribe(params => {
+      this.calService.eventGetById(params['id']).subscribe(data =>{
+        this.eventDetails.eventTitle = data[0].eventTitle;
+        this.eventDetails.description = data[0].description;
+        this.eventDetails.start = data[0].start;
+        this.eventDetails.end = data[0].end;
+        this.eventDetails.startTime = data[0].startTime;
+        this.eventDetails.endTime = data[0].endTime;
+        this.eventDetails.daysOfWeek = data[0].daysOfWeek;
+        this.eventDetails.startRecur = data[0].startRecur;
+        this.eventDetails.endRecur = data[0].endRecur;
+        this.eventDetails.recurring = data[0].recurring;
+
+        this.tempStart = data[0].startTime;
+        this.tempEnd = data[0].endTime;
+      })
+    })
   }
 
   editorInit(event: CKEditor4.EventInfo):void{

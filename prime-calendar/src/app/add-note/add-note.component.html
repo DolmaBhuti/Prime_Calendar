@@ -51,4 +51,37 @@
 </div>
 </body>
 
+<div *ngIf="this.eventDetails.recurring == 'none'; then thenBlock else elseBlock">
+</div>
+
+<ng-template #thenBlock>
+  <dl class="row">
+    <dt class="col1">Event Title </dt>
+    <dd class="col">{{eventDetails.eventTitle}}</dd>
+  </dl>
+  <dl class="row">
+    <dt class="col1">Event Description </dt>
+    <dd class="col">{{eventDetails.description}}</dd>
+  </dl>
+  <dl class="row">
+    <dt class="col1">Start Time</dt>
+    <dd class="col">{{this.eventDetails.start | date: 'shortTime'}} TO {{this.eventDetails.end | date: 'shortTime'}}</dd>
+  </dl>
+</ng-template>
+
+<ng-template #elseBlock>
+  <dl class="row">
+    <dt class="col1">Event Title </dt>
+    <dd class="col">{{eventDetails.eventTitle}}</dd>
+  </dl>
+  <dl class="row">
+    <dt class="col1">Event Description </dt>
+    <dd class="col">{{eventDetails.description}}</dd>
+  </dl>
+  <dl class="row">
+    <dt class="col1">Start Time</dt>
+    <dd class="col">{{this.tempStart | date: 'shortTime'}} TO {{this.tempEnd | date: 'shortTime'}}</dd>
+  </dl>
+</ng-template>
+
 <notifier-container></notifier-container>
