@@ -39,6 +39,8 @@ import { EventCreateDialogComponent } from './event-create-dialog/event-create-d
 import { DisplayEventDetailsComponent } from './display-event-details/display-event-details.component';
 import { EditEventDetailsComponent } from './edit-event-details/edit-event-details.component';
 import { AddNoteComponent } from './add-note/add-note.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -55,7 +57,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EventCreateDialogComponent,
     DisplayEventDetailsComponent,
     EditEventDetailsComponent,
-    AddNoteComponent
+    AddNoteComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

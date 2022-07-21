@@ -7,6 +7,8 @@ import { AboutComponent } from './about/about.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { GuardAuthService } from './guard-auth.service';
 import { AddNoteComponent } from './add-note/add-note.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'about', component: AboutComponent, canActivate: [GuardAuthService]},
@@ -14,7 +16,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: '', component: LandingPageComponent},
   { path: 'calendar', component: CalendarComponent, canActivate: [GuardAuthService]},
-  { path: 'note/:id', component: AddNoteComponent, canActivate: [GuardAuthService]}
+  { path: 'note/:id', component: AddNoteComponent, canActivate: [GuardAuthService]},
+  { path: 'forgotPassword', component: ForgotPasswordComponent},
+  { path: 'reset/:token', component: ResetPasswordComponent}
   // { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 

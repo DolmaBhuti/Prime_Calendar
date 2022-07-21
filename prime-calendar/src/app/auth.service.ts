@@ -62,4 +62,17 @@ export class AuthService {
       registerUser
     );
   }
+
+  public sendPasswordChangeEmail(user: User): Observable<any> {
+    return this.http.post<any>(
+      `${environment.userAPIBase}/changepassword`,
+      user
+    );
+  }
+
+  public checkToken(token: String): Observable<any> {
+    return this.http.get<any>(
+      `${environment.userAPIBase}/checkToken/${token}`
+    );
+  }
 }
