@@ -1,7 +1,180 @@
-<h1>{{model.noteTitle}}</h1>
+<!-- <h1>{{model.noteTitle}}</h1>
 <ckeditor [(ngModel)]="model.noteText"></ckeditor>
 <div>
     <button (click)="saveNote()">Save</button>
-</div>
+</div> -->
 
+<script>
+  CKEDITOR.plugins.addExternal(
+    "exportpdf",
+    "./node_modules/ckeditor4-plugin-exportpdf/",
+    "https://cdn.ckeditor.com/4.15.0/full/ckeditor.js"
+  );
+</script>
+<body>
+  <div class="flex-container">
+    <div
+      class="sideBar"
+      *ngIf="
+        this.eventDetails.recurring == 'none';
+        then thenBlock;
+        else elseBlock
+      "
+    ></div>
 
+    <div class="editor" *ngIf="loaded">
+      <button
+        mat-raised-button
+        color="primary"
+        class="saveBtn"
+        (click)="saveNote()"
+        style="margin-bottom: 10px"
+      >
+        Save
+      </button>
+      <ckeditor
+        [config]="{ extraPlugins: 'exportpdf', height: 800 }"
+        [(ngModel)]="model.noteText"
+        (ready)="editorInit($event)"
+      ></ckeditor>
+    </div>
+
+    <div class="timer">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="showTimerForm(); saveNote()"
+      >
+        Add new timer
+      </button>
+      <br />
+
+      <div class="timerBlock">
+        <section class="addTimer" *ngIf="isShow">
+          <label>Timer Title</label><br />
+          <input
+            id="timerTitle"
+            name="timerTitle"
+            type="string"
+            [(ngModel)]="newTimerTitle"
+            placeholder="Enter timer name"
+          />
+          <br />
+          <label>Work session</label><br />
+          <input
+            matInput
+            id="workSessionHr"
+            name="workSessionHr"
+            type="number"
+            [(ngModel)]="newWorkHr"
+          />
+          Hr
+          <input
+            matInput
+            id="workSessionMin"
+            name="workSessionMin"
+            type="number"
+            [(ngModel)]="newWorkMin"
+          />
+          Min
+
+          <br />
+          <button
+            mat-stroked-button
+            color="primary"
+            (click)="addTimer(); saveNote()"
+          >
+            Create
+          </button>
+          <button mat-stroked-button (click)="closeTimerForm()">Cancel</button>
+        </section>
+
+        <div
+          class="userTimer"
+          *ngFor="let singleTimer of timers; let i = index"
+        >
+          <h1>{{ singleTimer.timerTitle }}</h1>
+          <cd-timer
+            #basicTimer
+            class="bootstrap-timer"
+            [countdown]="true"
+            [startTime]="singleTimer.timerDuration * 60"
+            (onComplete)="
+              showNotification('default', singleTimer.timerTitle + ' is over!')
+            "
+            >[hours]h [minutes]m [seconds]s
+          </cd-timer>
+          <div>
+            <button
+              mat-stroked-button
+              color="primary"
+              (click)="
+                resumeTimer(i);
+                showNotification(
+                  'info',
+                  singleTimer.timerTitle + ' is started!'
+                )
+              "
+            >
+              Start
+            </button>
+            <button
+              mat-stroked-button
+              (click)="
+                stopTimer(i);
+                showNotification(
+                  'info',
+                  singleTimer.timerTitle + ' is stopped!'
+                )
+              "
+            >
+              Stop
+            </button>
+            <button mat-stroked-button (click)="deleteTimer()">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<ng-template #thenBlock>
+  <div class="sideBar">
+    <dl class="row">
+      <dt class="col1">Event Title</dt>
+      <dd class="col">{{ eventDetails.eventTitle }}</dd>
+    </dl>
+    <dl class="row">
+      <dt class="col1">Event Description</dt>
+      <dd class="col">{{ eventDetails.description }}</dd>
+    </dl>
+    <dl class="row">
+      <dt class="col1">Start Time</dt>
+      <dd class="col">
+        {{ this.eventDetails.start | date: "shortTime" }} TO
+        {{ this.eventDetails.end | date: "shortTime" }}
+      </dd>
+    </dl>
+  </div>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="sideBar">
+    <dl class="row">
+      <dt class="col1">Event Title</dt>
+      <dd class="col">{{ eventDetails.eventTitle }}</dd>
+    </dl>
+    <dl class="row">
+      <dt class="col1">Event Description</dt>
+      <dd class="col">{{ eventDetails.description }}</dd>
+    </dl>
+    <dl class="row">
+      <dt class="col1">Start Time</dt>
+      <dd class="col">
+        {{ this.tempStart | date: "shortTime" }} TO
+        {{ this.tempEnd | date: "shortTime" }}
+      </dd>
+    </dl>
+  </div>
+</ng-template>
+
+<notifier-container></notifier-container>

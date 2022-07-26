@@ -1,34 +1,33 @@
-
 <mat-toolbar class="navbar" color="primary">
-
-  <a class="navbar-brand" matTooltip="Home" routerLink="/calendar"> 
-    <h1>
-      Prime Calendar
-    </h1>
+  <a class="navbar-brand" matTooltip="Home" routerLink="/calendar">
+    <h1>Prime Calendar</h1>
   </a>
 
   <span class="linkContain">
-    <a class="navLinks" matTooltip="Home" routerLink="/calendar" > My Schedule</a>
-    <a class="navLinks" matTooltip="Home" > My Notes</a>
-
+    <a class="navLinks" matTooltip="Home" routerLink="/calendar">
+      My Schedule</a
+    >
+    <a class="navLinks" matTooltip="Home" routerLink="/mynotes"> My Notes</a>
   </span>
 
   <button mat-button [matMenuTriggerFor]="userMenu" *ngIf="token">
     <mat-icon>person</mat-icon>
     <span fxShow fxHide.xs>
-      {{token.userName}}
+      {{ token.userName }}
     </span>
   </button>
-  
-  <mat-menu #userMenu="matMenu" xPosition="before" yPosition="above" [overlapTrigger]="false">
 
+  <mat-menu
+    #userMenu="matMenu"
+    xPosition="before"
+    yPosition="above"
+    [overlapTrigger]="false"
+  >
     <a mat-menu-item (click)="logout()">
       <mat-icon>exit_to_app</mat-icon>
       <span>Log out</span>
     </a>
-
   </mat-menu>
-
 </mat-toolbar>
 
 <router-outlet></router-outlet>

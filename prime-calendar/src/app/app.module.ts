@@ -22,9 +22,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatOptionModule } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 //full calendar plug ins
 import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
@@ -41,11 +41,17 @@ import { EditEventDetailsComponent } from './edit-event-details/edit-event-detai
 import { AddNoteComponent } from './add-note/add-note.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { MyNotesComponent } from './my-notes/my-notes.component';
 
-FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+import { CdTimerModule } from 'angular-cd-timer';
+import { NotifierModule } from 'angular-notifier';
+
+FullCalendarModule.registerPlugins([
+  // register FullCalendar plugins
   dayGridPlugin,
-  interactionPlugin
+  interactionPlugin,
 ]);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +65,9 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EditEventDetailsComponent,
     AddNoteComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    AddNoteComponent,
+    MyNotesComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,15 +92,33 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     MatOptionModule,
     MatSelectModule,
     FullCalendarModule, // register FullCalendar with you app
-    CKEditorModule
+    CKEditorModule,
+    CdTimerModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          /**
+           * Defines the horizontal position on the screen
+           * @type {'left' | 'middle' | 'right'}
+           */
+          position: 'right',
+
+          /**
+           * Defines the horizontal distance to the screen edge (in px)
+           * @type {number}
+           */
+          distance: 12,
+        },
+      },
+    }),
   ],
   providers: [
     {
-    provide: HTTP_INTERCEPTORS,
-    useClass: InterceptTokenService,
-    multi: true
-    }
-],
-  bootstrap: [AppComponent]
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptTokenService,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

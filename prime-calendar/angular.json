@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": false
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -46,11 +49,7 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/_redirects"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/_redirects"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
@@ -59,7 +58,6 @@
               "./node_modules/jquery/dist/jquery.js",
               "./node_modules/tether/dist/js/tether.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
-      
             ]
           },
           "configurations": {
@@ -120,10 +118,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.css"
@@ -132,7 +127,6 @@
               "./node_modules/jquery/dist/jquery.js",
               "./node_modules/tether/dist/js/tether.js",
               "./node_modules/bootstrap/dist/js/bootstrap.js"
-      
             ]
           }
         }

@@ -1,0 +1,86 @@
+.title h1 {
+  float: left;
+}
+.title button {
+  float: right;
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sideBar {
+  width: 250px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #2126ad;
+  flex-grow: 1;
+}
+.editor {
+  flex-grow: 8;
+  margin: 10px;
+  min-width: 500px;
+  text-align: right;
+}
+.timer {
+  flex-grow: 1;
+  text-align: center;
+  padding-top: 10px;
+}
+.timerBlock {
+  display: inline-block;
+}
+.addTimer {
+  display: block;
+  margin: 10px;
+  border-radius: 15px;
+  border: 1px solid #2126ad;
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+}
+.userTimer {
+  display: block;
+  margin: 10px;
+  border-radius: 15px;
+  border: 1px solid #2126ad;
+  padding: 10px;
+  width: 250px;
+  text-align: center;
+}
+.bootstrap-timer {
+  color: #303030;
+  background-color: #eeeeee;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #c9c9c9;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.timer button {
+  margin-bottom: 10px;
+}
+
+#workSessionHr {
+  width: 50px;
+}
+
+#workSessionMin {
+  width: 50px;
+}
+
+#timerTitle {
+  width: 150px;
+}
+
+.addTimer button {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
