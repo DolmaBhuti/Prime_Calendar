@@ -154,68 +154,6 @@ export class AddNoteComponent implements OnInit, AfterViewInit {
       }
     });
   }
-  showTimerForm(): void {
-    this.isShow = true;
-  }
-  closeTimerForm(): void {
-    this.isShow = false;
-  }
-
-  addTimer(): void {
-    console.log('add timer works');
-    let newTimer = new Timer();
-    newTimer.timerTitle = this.newTimerTitle;
-    this.timerNumber++;
-    newTimer.eventId = this.model.eventId;
-    let wrkHrInMin = this.newWorkHr * 60;
-    newTimer.timerDuration = wrkHrInMin + this.newWorkMin;
-
-    console.log('New timer: ');
-    console.log(newTimer);
-
-    this.timerService.addTimer(newTimer).subscribe((success) => {
-      this.ngOnInit();
-    });
-
-    //reset:
-    this.newTimerTitle = '';
-    this.newWorkHr = 0;
-    this.newWorkMin = 0;
-    this.isShow = false;
-  }
-
-  deleteTimer(): void {
-    this.timerService.getTimer(this.model.eventId).subscribe((timerData) => {
-      if (timerData != '') {
-        this.timerService
-          .deleteTimer(this.model.eventId, timerData[0]._id)
-          .subscribe((sucess) => {
-            window.location.reload();
-            console.log('timer id: ' + timerData[0]._id);
-          });
-      }
-    });
-  }
-
-  displayTimer(): void {
-    //console.log(this.basicTimer.autoStart)
-    let index: number = 0;
-    this.route.params.subscribe((params) => {
-      this.model.eventId = params['id'];
-    });
-    this.timerService.getTimer(this.model.eventId).subscribe((timerData) => {
-      this.timers = timerData;
-      for (index = 0; index < timerData.length; index++) {
-        this.secondsToDisplay.push(timerData[index].timerDuration * 60);
-        // console.log(this.secondsToDisplay[index]);
-        // console.log("id: " + this.model.eventId);
-      }
-    });
-  }
-
-  public showNotification(type: string, message: string): void {
-    this.notifier.notify(type, message);
-  }
 
   showTimerForm(): void {
     this.isShow = true;
