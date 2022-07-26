@@ -1,3 +1,11 @@
-.sidebar{
-    color:green;
+/* .sidebar{
+    border: 2px solid black;
+    height: 20vh;   
+} */
+.cal{
+    width:80vw;
+    float:right;
 }
+/* .container{
+    display:grid;
+} */

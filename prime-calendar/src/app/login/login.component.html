@@ -7,13 +7,13 @@
         <mat-form-field class="full-width-input">
           <input
             matInput
-            placeholder="User Name"
+            placeholder="Email"
             name="username"
             required
             autofocus
             [(ngModel)]="user.userName"
           />
-          <mat-error>Please provide a valid user name</mat-error> </mat-form-field
+          <mat-error>Please provide a valid Email as user name</mat-error> </mat-form-field
         ><br />
         <mat-form-field class="full-width-input">
           <input
@@ -31,22 +31,23 @@
           mat-raised-button
           color="accent"
           type="submit"
-          [disabled]="loading"
+          [disabled]="loading?true:false"
         >
           <mat-icon>login</mat-icon>
-          <span>&nbsp;&nbsp;&nbsp;Login</span>
-        </button>
-        <button mat-raised-button color="accent" type="submit" *ngIf="loading">
-          <mat-icon>login</mat-icon>
-          <span>&nbsp;&nbsp;&nbsp;Processing Request</span>
+          <span *ngIf="!loading">&nbsp;&nbsp;&nbsp;Login</span>
+          <span *ngIf="loading">Processing Request</span>
         </button>
         &nbsp;&nbsp;
-        <a routerLink="/register">
-          <button mat-raised-button color="primary">
-            <mat-icon>account_box</mat-icon>
-            <span>&nbsp;&nbsp;&nbsp;Register</span>
-          </button>
-        </a>
+        <button mat-raised-button color="primary" routerLink="/register">
+          <mat-icon>account_box</mat-icon>
+          <span>&nbsp;&nbsp;&nbsp;Register</span>
+        </button>
+      <br />
+      <br />
+        <button mat-stroked-button color="primary" routerLink="/forgotPassword">
+          <mat-icon>key</mat-icon>
+          <span>&nbsp;&nbsp;&nbsp;Forgot password</span>
+        </button>
       </form>
     </mat-card-content>
   </mat-card>

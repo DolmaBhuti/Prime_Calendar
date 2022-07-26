@@ -1,27 +1,29 @@
-
-<div >
-         <ul *ngFor="let a of eventssaved;">
-          <li>
-          
-           <h3>{{a.title}}</h3>
-           <div *ngIf="a.note == 'no note found'; else elseBlock" >
-              <button id="note" mat-button  routerLink="/note/{{a.id}}">Add to Note</button>  
-          </div>
-          <ng-template #elseBlock>
-            <p>{{a.note}}</p>
-            <p>last edited: {{a.lastEdited}}</p>
-            <span>
-            <button id="note" mat-button  routerLink="/note/{{a.id}}">Edit Note</button>
-            </span>
-            <span>
-            <button id="delete" mat-button (click)="delNote(a.id)">Delete Note</button>
-            </span>
-            <span>
-            <button mat-button (click)="downloadPDF(a)">Export PDF</button>
-           </span>
-          </ng-template>
-        </li>
-         </ul>
-
-
-   </div>
+<div>
+  <ul *ngFor="let a of eventssaved">
+    <li>
+      <h3>{{ a.title }}</h3>
+      <div *ngIf="a.note == 'no note found'; else elseBlock">
+        <button id="note" mat-button routerLink="/note/{{ a.id }}">
+          Add to Note
+        </button>
+      </div>
+      <ng-template #elseBlock>
+        <p>{{ a.note }}</p>
+        <p>last edited: {{ a.lastEdited }}</p>
+        <span>
+          <button id="note" mat-button routerLink="/note/{{ a.id }}">
+            Edit Note
+          </button>
+        </span>
+        <span>
+          <button id="delete" mat-button (click)="delNote(a.id)">
+            Delete Note
+          </button>
+        </span>
+        <span>
+          <button mat-button (click)="downloadPDF(a)">Export PDF</button>
+        </span>
+      </ng-template>
+    </li>
+  </ul>
+</div>

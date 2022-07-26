@@ -39,9 +39,10 @@ import { EventCreateDialogComponent } from './event-create-dialog/event-create-d
 import { DisplayEventDetailsComponent } from './display-event-details/display-event-details.component';
 import { EditEventDetailsComponent } from './edit-event-details/edit-event-details.component';
 import { AddNoteComponent } from './add-note/add-note.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { MyNotesComponent } from './my-notes/my-notes.component';
 
-//timer
 import { CdTimerModule } from 'angular-cd-timer';
 import { NotifierModule } from 'angular-notifier';
 
@@ -63,6 +64,8 @@ FullCalendarModule.registerPlugins([
     DisplayEventDetailsComponent,
     EditEventDetailsComponent,
     AddNoteComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
     MyNotesComponent,
   ],
   imports: [
@@ -92,23 +95,20 @@ FullCalendarModule.registerPlugins([
     CdTimerModule,
     NotifierModule.withConfig({
       position: {
-
         horizontal: {
-      
           /**
            * Defines the horizontal position on the screen
            * @type {'left' | 'middle' | 'right'}
            */
           position: 'right',
-      
+
           /**
            * Defines the horizontal distance to the screen edge (in px)
            * @type {number}
            */
-          distance: 12
-      
-        }
-      }
+          distance: 12,
+        },
+      },
     }),
   ],
   providers: [
