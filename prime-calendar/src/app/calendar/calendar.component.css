@@ -1,11 +1,41 @@
-/* .sidebar{
-    border: 2px solid black;
-    height: 20vh;   
-} */
-.cal{
-    width:80vw;
-    float:right;
+
+#container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    overflow:hidden
 }
-/* .container{
-    display:grid;
-} */
+.sidebar{
+    height: 100%;  
+    flex: 1; 
+    background-color: #e8eaf6;
+    border-right: 2px solid #c5cae9;
+} 
+.cal{
+    flex:4;
+    overflow: scroll;
+}
+
+#day{
+font-size: 35px;
+padding-top: 30px;
+padding-left: 20px;
+}
+
+#date{
+    font-size: 35px;
+    padding-left: 40px;
+    padding-bottom: 20px;
+}
+
+#text{
+    padding-left: 10px;
+}
+
+.time{
+    list-style-type: none;
+}
+
+.des{
+    list-style-type: none;
+}

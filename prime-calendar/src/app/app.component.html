@@ -2,7 +2,7 @@
   <a class="navbar-brand" matTooltip="Home" routerLink="/calendar">
     <h1>Prime Calendar</h1>
   </a>
-
+<div>
   <span class="linkContain">
     <a class="navLinks" matTooltip="Home" routerLink="/calendar">
       My Schedule</a
@@ -28,8 +28,12 @@
       <span>Log out</span>
     </a>
   </mat-menu>
+</div>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div id="app">
+  <router-outlet></router-outlet>
+</div>
+
 
 <!-- TODO: footer -->

@@ -1,10 +1,35 @@
-<div class="container">
-  <div class="sidebar">
-  </div>
+
+<div id="container">
+<div class="sidebar">
+
+  <h1 id="day">{{today | date:'EEEE'}}</h1>
+  <h1 id="date">{{today | date:'mediumDate' }}</h1>
+  <h2 id="text">Today's Event</h2>
+  <ul>
+    <li *ngFor="let single of singleEventList">
+      {{single.title}}
+      <ul>
+        <li class="time">{{single.start | date:'shortTime'}} - {{single.end | date:'shortTime'}}
+        </li>
+        <li class="des">{{single.description}}</li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li *ngFor="let recurring of recurringEventList">
+      {{recurring.title}}
+      <ul>
+        <li class="time">{{recurring.startTime}} - {{recurring.endTime}}
+        </li>
+        <li class="des">{{recurring.description}}</li>
+      </ul>
+    </li>
+  </ul>
+
+</div>
   
   <div class="cal">
     <full-calendar [options]="calendarOptions"></full-calendar>
-
   </div>
-
 </div>

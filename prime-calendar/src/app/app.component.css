@@ -10,8 +10,6 @@ a { text-decoration: none;
     padding-left: 20px ;
 }
 
-.linkContain{
-    margin-left: 70%;
-}
-.navbar{
+#app{
+    height: 100%;
 }
