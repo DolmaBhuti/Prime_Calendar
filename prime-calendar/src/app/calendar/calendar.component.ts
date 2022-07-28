@@ -21,6 +21,7 @@ import { ConditionalExpr } from '@angular/compiler';
 //Note
 import { NotesService } from '../notes.service';
 import { AutofillMonitor } from '@angular/cdk/text-field';
+import { EditEventDetailsComponent } from '../edit-event-details/edit-event-details.component';
 
 
 @Component({
@@ -205,7 +206,10 @@ export class CalendarComponent implements OnInit {
 
   handleEventDrop(info: any){
 
-    let dialogRef = this.dialog.open(DisplayEventDetailsComponent,{width:'400px',data:info})
+    let dialogRef = this.dialog.open(EditEventDetailsComponent, {
+      width: '400px',
+      data: info,
+      });
     
   }
 
