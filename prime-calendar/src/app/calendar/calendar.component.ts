@@ -261,8 +261,28 @@ export class CalendarComponent implements OnInit {
             let mStart = (parseInt(data[i].startTime)%3600000) /60000
             let hEnd = Math.round(parseInt(data[i].endTime)/3600000)
             let mEnd = (parseInt(data[i].endTime)%3600000) /60000
-            let startTimeString = hStart>12?hStart-12+":"+(mStart>10?mStart:'0'+mStart)+' PM':hStart+":"+(mStart>10?mStart:'0'+mStart)+' AM'
-            let endTimeString = hEnd>12?hEnd-12+":"+(mEnd>10?mEnd:'0'+mEnd)+' PM':hEnd+":"+(mEnd>10?mEnd:'0'+mEnd)+' AM'
+            let startTimeString;
+            let endTimeString;
+            if(hStart == 12){
+              startTimeString = "12:"+(mStart>10?mStart:'0'+mStart)+' PM'
+            }else if(hStart>12){
+              startTimeString = hStart-12+":"+(mStart>10?mStart:'0'+mStart)+' PM'
+            }else if(hStart=0){
+              startTimeString = "12:"+(mStart>10?mStart:'0'+mStart)+' AM'
+            }else{
+              startTimeString = hStart+":"+(mStart>10?mStart:'0'+mStart)+' AM'
+            }
+            if(hEnd == 12){
+              endTimeString = "12:"+(mEnd>10?mEnd:'0'+mEnd)+' PM'
+            }else if(hEnd>12){
+              endTimeString = hEnd-12+":"+(mEnd>10?mEnd:'0'+mEnd)+' PM'
+            }else if(hEnd=0){
+              endTimeString = "12:"+(mEnd>10?mEnd:'0'+mEnd)+' AM'
+            }else{
+              endTimeString = hEnd+":"+(mEnd>10?mEnd:'0'+mEnd)+' AM'
+            }
+
+
             console.log(startTimeString+' - '+endTimeString)
 
 
