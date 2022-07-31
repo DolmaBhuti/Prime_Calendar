@@ -16,7 +16,13 @@ export class MyNotesComponent implements OnInit {
     public noteService: NotesService
   ) {}
 
+
+
   eventssaved: NoteDisplay[] = [];
+
+  sbTitle: string = '';
+  sbNote: string = '';
+  sbLastEdited: string = '';
 
   // employees = [ {name: 'John Smith', age: 28, department: 'IT'},
   //           {name: 'Sarah Johnson', age: 32, department: 'IT'},
@@ -30,6 +36,8 @@ export class MyNotesComponent implements OnInit {
   ngOnInit(): void {
     this.calService.eventGetFromApi().subscribe((data) => {
       for (let i = 0; i < data.length; i++) {
+        
+
         this.noteService.getNote(data[i]._id).subscribe((noteData) => {
           if (noteData == '') {
             console.log('no noteData');
@@ -69,6 +77,13 @@ export class MyNotesComponent implements OnInit {
       }
     });
   }
+
+  updSideBar(a: NoteDisplay): void {
+    this.sbNote = a.note ;
+    this.sbTitle = a.title;
+    this.sbLastEdited = a.lastEdited;
+  }
+
   downloadPDF(content: NoteDisplay) {
     let pdf = new jsPDF();
 
