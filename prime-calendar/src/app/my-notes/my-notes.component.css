@@ -20,10 +20,21 @@ li p {
   font: 200 12px/1.5 Georgia, Times New Roman, serif;
 }
 
+
+.page{
+ display: grid;
+ grid-template-columns: 270px 70%;
+}
+
+ul{
+  width: auto;
+}
 li {
+
   padding: 10px;
   overflow: auto;
   background-color: lightgray;
+  align-self: right;
 }
 
 li:hover {
@@ -41,4 +52,14 @@ button {
 button:hover {
   background-color: #072f5f;
   color: white;
+}
+
+.sideBar {
+  width: 250px;
+  text-align: center;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #2126ad;
+  flex-grow: 1;
 }
