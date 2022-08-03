@@ -31,7 +31,10 @@ export class DisplayEventDetailsComponent implements OnInit {
   deleteBtn():void{
     console.log("will delete: " + this.data.event.id);
     this.data.event.remove();
-    this.calService.eventDelete(this.data.event.id).subscribe(success=>{this.dialogRef.close();});
+    this.calService.eventDelete(this.data.event.id).subscribe(success=>{
+      this.dialogRef.close();
+      window.location.reload();
+    });
     console.log("event deleted");
   }
 
