@@ -39,6 +39,7 @@ export class AddNoteComponent implements OnInit, AfterViewInit {
   newBreakMin: number = 0;
   timerNumber: number = 1;
   durationInSeconds: number = 0;
+  warning: string = "";
 
   eventDetails: EventFlexible = {
     eventTitle: '',
@@ -159,11 +160,21 @@ export class AddNoteComponent implements OnInit, AfterViewInit {
     this.isShow = true;
   }
   closeTimerForm(): void {
+    this.newTimerTitle = '';
+    this.newWorkHr = 0;
+    this.newWorkMin = 0;
+    this.warning = "";
     this.isShow = false;
   }
 
   addTimer(): void {
-    console.log('add timer works');
+    this.warning = "";
+    console.log('add timer works: '+this.newWorkHr+', '+this.newWorkMin);
+    if((this.newWorkHr <= 0 && this.newWorkMin <= 0)||isNaN(this.newWorkHr)||isNaN(this.newWorkMin)){
+      console.log('invalid');
+      this.warning = "Please enter hour and minute"
+      return;
+    }
     let newTimer = new Timer();
     newTimer.timerTitle = this.newTimerTitle;
     this.timerNumber++;

@@ -222,6 +222,7 @@
           <input id="timerTitle" name="timerTitle" type="string" [(ngModel)]="newTimerTitle" placeholder="Enter timer name"/>
           <br />
           <label>Work session</label><br />
+          <mat-error *ngIf="warning"> {{ warning }}</mat-error>
           <input matInput id="workSessionHr" name="workSessionHr" type="number" [(ngModel)]="newWorkHr"/> Hr 
           <input matInput id="workSessionMin" name="workSessionMin" type="number" [(ngModel)]="newWorkMin"/> Min 
       
