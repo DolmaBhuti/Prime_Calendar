@@ -1,6 +1,15 @@
-<div class="page">
+<main class="testimonial-grid">
+<div class="heading grid-col-span-3">
+  <br>
+  <h1>My Notes</h1>
+  <hr>
+</div>
+  
 
-    <div class="sideBar">
+
+    <div class="sideBar grid-col-span-1">
+      <div class="inner">
+      <h2>Note details</h2>
       <dl class="row">
         <dt class="col1">Event Title</dt>
         <dd class="col">{{sbTitle}}</dd>
@@ -14,17 +23,19 @@
         <dd class="col">{{sbLastEdited}}</dd>
       </dl>
     </div>
+    </div>
 
-    <div class="notes">
-      <ul *ngFor="let a of eventssaved">
-        <li (click) = "updSideBar(a)">
-          <h3>{{ a.title }}</h3>
-          <div *ngIf="a.note == 'no note found'; else elseBlock">
+    <div class="notes grid-col-span-2">
+      <div *ngFor="let a of eventssaved" >
+        <div class="note" (click) = "updSideBar(a)">
+          <div class="title grid-col-span-2"><span class="tt">{{ a.title }}</span></div >
+          <div *ngIf="a.note == 'no note found'; else elseBlock" class="buttons grid-col-span-2">
             <button id="note" mat-button routerLink="/note/{{ a.id }}">
               Add to Note
             </button>
           </div>
-          <ng-template #elseBlock>
+          <ng-template #elseBlock >
+            <div class="buttons grid-col-span-2">
             <span>
               <button id="note" mat-button routerLink="/note/{{ a.id }}">
                 Edit Note
@@ -38,9 +49,11 @@
             <span>
               <button mat-button (click)="downloadPDF(a)">Export PDF</button>
             </span>
+          </div>
           </ng-template>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </div>
+    
 
 </div>
+</main>
