@@ -1,3 +1,13 @@
+.header {
+  display: inline-block;
+}
+.saveBtn {
+  margin-left: 80%;
+}
+.addBtn {
+  margin-left: 1%;
+}
+
 .title h1 {
   float: left;
 }
@@ -11,12 +21,11 @@
   justify-content: center;
 }
 .sideBar {
-  width: 250px;
+  width: 200px;
   text-align: center;
   margin: 10px;
   padding: 10px;
-  border-radius: 15px;
-  border: 1px solid #2126ad;
+  background-color: #c4c4c4;
   flex-grow: 1;
 }
 .editor {
@@ -35,11 +44,10 @@
 }
 .addTimer {
   display: block;
-  margin: 10px;
-  border-radius: 15px;
-  border: 1px solid #2126ad;
   padding: 10px;
-  width: 250px;
+  margin-top: -9%;
+  border: 1px solid #c4c4c4;
+  width: 200px;
   text-align: center;
 }
 .userTimer {
@@ -75,7 +83,7 @@
   width: 50px;
 }
 
-#timerTitle {
+.timerTitle {
   width: 150px;
 }
 
@@ -83,4 +91,20 @@
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  .header {
+    display: block;
+  }
+  .upper {
+    height: 100px;
+  }
+  .saveBtn {
+    margin-left: 0%;
+  }
+  .editor {
+    width: 50%;
+    text-align: right;
+  }
 }
